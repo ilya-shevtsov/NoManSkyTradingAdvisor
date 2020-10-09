@@ -16,7 +16,8 @@ def read_data(file_name):
 
 
 def analyze_data(data_frame):
-    return data_frame
+    table = pd.pivot_table(data_frame, values='Buying', index=['Item ID'], columns=['System'])
+    return table
 
 
 def visualize(data_frame):
@@ -25,4 +26,3 @@ def visualize(data_frame):
 
 if __name__ == '__main__':
     main()
-
