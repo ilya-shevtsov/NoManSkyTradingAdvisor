@@ -16,15 +16,13 @@ def read_data(file_name):
 
 
 def analyze_data(data_frame):
-    melted = pd.melt(data_frame, id_vars=['Item ID', 'System'], value_vars=['Buying', 'Selling'], var_name='Action')
-
-    table = pd.pivot_table(melted, values='value', index=['Item ID', 'Action'], columns=['System'])
-    return table
+    return data_frame
 
 
 def visualize(data_frame):
-    print(data_frame.fillna("-"))
-    # print(tabulate(data_frame, headers='keys', tablefmt='psql'))
+    melted = pd.melt(data_frame, id_vars=['Item ID', 'System ID'], value_vars=['Buying', 'Selling'], var_name='Action')
+    table = pd.pivot_table(melted, values='value', index=['Item ID', 'Action'], columns=['System ID'])
+    print(table.fillna("-"))
 
 
 if __name__ == '__main__':
