@@ -18,17 +18,19 @@ def read_data(file_name):
 def analyze_data(data_frame):
     data_frame = data_frame.replace(0, np.NaN)
     sorted_data = data_frame.groupby('ItemID').agg({'Buying': min, 'Selling': max}).reset_index()
-    
-    print(sorted_data)
+
+    for ind in data_frame.index:
+        print(data_frame['ItemID'][ind],data_frame['SystemID'][ind])
+    # print(sorted_data)
     return sorted_data
 
 
 def visualize(data_frame):
     data_frame.head()
-    fig = go.Figure(data=[go.Table(header=dict(values=list(data_frame.columns)),
-                                   cells=dict(values=[data_frame.ItemID, data_frame.Buying,
-                                                      data_frame.Selling]))])
-    fig.show()
+    # fig = go.Figure(data=[go.Table(header=dict(values=list(data_frame.columns)),
+    #                                cells=dict(values=[data_frame.ItemID, data_frame.Buying,
+    #                                                   data_frame.Selling]))])
+    # fig.show()
 
 
 if __name__ == '__main__':
