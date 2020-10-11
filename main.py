@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
+import math
 
 
 def main():
@@ -18,19 +19,22 @@ def read_data(file_name):
 def analyze_data(data_frame):
     data_frame = data_frame.replace(0, np.NaN)
     sorted_data = data_frame.groupby('ItemID').agg({'Buying': min, 'Selling': max}).reset_index()
-
-    for ind in data_frame.index:
-        print(data_frame['ItemID'][ind],data_frame['SystemID'][ind])
-    # print(sorted_data)
+    for ind in sorted_data.index:
+        price = sorted_data['Buying'][ind]
+        if math.isnan(price):
+            continue
+        indexed = (data_frame[data_frame.Buying.notnull()]).set_index('Buying')  # [price]
+        sorted_data.loc['Buying', ind] = indexed['SystemID'][price]
+    # sorted_data.to_csv('sorteddata.csv', index=False, sep=';')
     return sorted_data
 
 
 def visualize(data_frame):
     data_frame.head()
-    # fig = go.Figure(data=[go.Table(header=dict(values=list(data_frame.columns)),
-    #                                cells=dict(values=[data_frame.ItemID, data_frame.Buying,
-    #                                                   data_frame.Selling]))])
-    # fig.show()
+    fig = go.Figure(data=[go.Table(header=dict(values=list(data_frame.columns)),
+                                   cells=dict(values=[data_frame.ItemID, data_frame.Buying,
+                                                      data_frame.Selling]))])
+    fig.show()
 
 
 if __name__ == '__main__':
