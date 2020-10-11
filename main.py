@@ -19,18 +19,27 @@ def read_data(file_name):
 def analyze_data(data_frame):
     data_frame = data_frame.replace(0, np.NaN)
     sorted_data = data_frame.groupby('ItemID').agg({'Buying': min, 'Selling': max}).reset_index()
+
     for ind in sorted_data.index:
-        price = sorted_data['Buying'][ind]
-        if math.isnan(price):
+        price_buying = sorted_data['Buying'][ind]
+        if math.isnan(price_buying):
             continue
-        indexed = (data_frame[data_frame.Buying.notnull()]).set_index('Buying')
-        sorted_data.loc[ind, 'Buying'] = indexed['SystemID'][price]
-    print(sorted_data)
+        indexed_buying = (data_frame[data_frame.Buying.notnull()]).set_index('Buying')
+        sorted_data.loc[ind, 'Buying'] = indexed_buying['SystemID'][price_buying]
+
+    for ind in sorted_data.index:
+        price_selling = sorted_data['Selling'][ind]
+        if math.isnan(price_selling):
+            continue
+        indexed_selling = (data_frame[data_frame.Selling.notnull()]).set_index('Selling')
+        sorted_data.loc[ind, 'Selling'] = indexed_selling['SystemID'][price_selling]
     return sorted_data
 
 
 def visualize(data_frame):
-    visualize_in_browser(data_frame)
+    b = data_frame.sort_values(['Buying', 'Selling'])
+    print(b)
+    visualize_in_browser(b)
 
 
 def visualize_in_browser(data):
