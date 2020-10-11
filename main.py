@@ -23,9 +23,10 @@ def analyze_data(data_frame):
         price = sorted_data['Buying'][ind]
         if math.isnan(price):
             continue
-        indexed = (data_frame[data_frame.Buying.notnull()]).set_index('Buying')  # [price]
-        sorted_data.loc['Buying', ind] = indexed['SystemID'][price]
+        indexed = (data_frame[data_frame.Buying.notnull()]).set_index('Buying')
+        sorted_data.loc[ind, 'Buying'] = indexed['SystemID'][price]
     # sorted_data.to_csv('sorteddata.csv', index=False, sep=';')
+    print(sorted_data)
     return sorted_data
 
 
