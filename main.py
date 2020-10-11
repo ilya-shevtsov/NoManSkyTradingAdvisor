@@ -25,17 +25,21 @@ def analyze_data(data_frame):
             continue
         indexed = (data_frame[data_frame.Buying.notnull()]).set_index('Buying')
         sorted_data.loc[ind, 'Buying'] = indexed['SystemID'][price]
-    # sorted_data.to_csv('sorteddata.csv', index=False, sep=';')
     print(sorted_data)
     return sorted_data
 
 
 def visualize(data_frame):
-    data_frame.head()
-    fig = go.Figure(data=[go.Table(header=dict(values=list(data_frame.columns)),
-                                   cells=dict(values=[data_frame.ItemID, data_frame.Buying,
-                                                      data_frame.Selling]))])
+    visualize_in_browser(data_frame)
+
+
+def visualize_in_browser(data):
+    data.head()
+    fig = go.Figure(data=[go.Table(header=dict(values=list(data.columns)),
+                                   cells=dict(values=[data.ItemID, data.Buying,
+                                                      data.Selling]))])
     fig.show()
+    return fig
 
 
 if __name__ == '__main__':
