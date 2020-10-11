@@ -1,10 +1,11 @@
 import numpy as np
 import pandas as pd
 from tabulate import tabulate
+import plotly.graph_jbjects as go
 
 
 def main():
-    file_name = "data.csv"
+    file_name = "smalldata.csv"
     data_frame = read_data(file_name)
     analyzed_data = analyze_data(data_frame)
     visualize(analyzed_data)
@@ -23,6 +24,7 @@ def visualize(data_frame):
     melted = pd.melt(data_frame, id_vars=['Item ID', 'System ID'], value_vars=['Buying', 'Selling'], var_name='Action')
     table = pd.pivot_table(melted, values='value', index=['Item ID', 'Action'], columns=['System ID'])
     print(table.fillna("-"))
+    data_frame.head()
 
 
 if __name__ == '__main__':
