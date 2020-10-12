@@ -7,14 +7,14 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Users\dayzi\AppData\Local\Tesseract
 
 def main():
     screenshot_name = "Buying.png"
-    system_name = get_system_name(screenshot_name)
-    item_name = get_item_name(screenshot_name)
-    item_price = get_item_price(screenshot_name)
+    grayscale_screenshot = Image.open(screenshot_name).convert('LA')
+    system_name = get_system_name(grayscale_screenshot)
+    item_name = get_item_name(grayscale_screenshot)
+    item_price = get_item_price(grayscale_screenshot)
     print(item_name[:-2], system_name[:-2], item_price[:-2])
 
 
-def get_system_name(screenshot_name):
-    screenshot = Image.open(screenshot_name).convert('LA')
+def get_system_name(screenshot):
     img_crop = crop_image(screenshot, left=343, top=940, right_offset=1100, bottom_offset=81)
     img_crop.save('temp_files/System_temp.png')
     img = cv2.imread('temp_files/System_temp.png')
@@ -22,8 +22,7 @@ def get_system_name(screenshot_name):
     return text
 
 
-def get_item_name(screenshot_name):
-    screenshot = Image.open(screenshot_name).convert('LA')
+def get_item_name(screenshot):
     img_crop = crop_image(screenshot, left=1165, top=250, right_offset=320, bottom_offset=793)
     img_crop.save('temp_files/Item_temp.png')
     img = cv2.imread('temp_files/Item_temp.png')
@@ -31,8 +30,7 @@ def get_item_name(screenshot_name):
     return text
 
 
-def get_item_price(screenshot_name):
-    screenshot = Image.open(screenshot_name).convert('LA')
+def get_item_price(screenshot):
     img_crop = crop_image(screenshot, left=1750, top=250, right_offset=0, bottom_offset=780)
     img_crop.save('temp_files/Item_price_temp.png')
     img = cv2.imread('temp_files/Item_price_temp.png')
