@@ -22,6 +22,10 @@ def analyze_data(data_frame):
     sorted_data.dropna(subset=['Buying', 'Selling'], inplace=True)
 
     for ind in sorted_data.index:
+        if sorted_data['Buying'][ind] > sorted_data['Selling'][ind]:
+            sorted_data = sorted_data.drop([ind])
+
+    for ind in sorted_data.index:
         price_buying = sorted_data['Buying'][ind]
         if math.isnan(price_buying):
             continue
@@ -40,7 +44,7 @@ def analyze_data(data_frame):
 def visualize(data_frame):
     b = data_frame.sort_values(['Buying', 'Selling'])
     print(b)
-    visualize_in_browser(b)
+    # visualize_in_browser(b)
 
 
 def visualize_in_browser(data):
