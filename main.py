@@ -19,6 +19,7 @@ def read_data(file_name):
 def analyze_data(data_frame):
     data_frame = data_frame.replace(0, np.NaN)
     sorted_data = data_frame.groupby('ItemID').agg({'Buying': min, 'Selling': max}).reset_index()
+    sorted_data.dropna(subset=['Buying', 'Selling'], inplace=True)
 
     for ind in sorted_data.index:
         price_buying = sorted_data['Buying'][ind]
