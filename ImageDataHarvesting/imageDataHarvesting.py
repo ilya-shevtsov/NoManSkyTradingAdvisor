@@ -8,9 +8,10 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Users\dayzi\AppData\Local\Tesseract
 def main():
     screenshot_name = "Buying.png"
     # system_name = get_system_name(screenshot_name)
-    item_name = get_item_name(screenshot_name)
-    print(item_name[:-2])
-    # print(system_name[:-2])
+    # item_name = get_item_name(screenshot_name)
+    item_price = get_item_price(screenshot_name)
+    # print(item_name[:-2], system_name[:-2], item_price[:-2])
+    print(item_price[:-2])
 
 
 def get_system_name(screenshot_name):
@@ -39,6 +40,21 @@ def get_item_name(screenshot_name):
     img_crop = screenshot.crop((left, top, right, bottom))
     img_crop.save('temp_files/Item_temp.png')
     img = cv2.imread('temp_files/Item_temp.png')
+    text = pytesseract.image_to_string(img)
+    return text
+
+
+def get_item_price(screenshot_name):
+    screenshot = Image.open(screenshot_name).convert('LA')
+    width = screenshot.width
+    height = screenshot.height
+    left = 1750
+    top = 250
+    right = width - 0
+    bottom = height - 780
+    img_crop = screenshot.crop((left, top, right, bottom))
+    img_crop.save('temp_files/Item_price_temp.png')
+    img = cv2.imread('temp_files/Item_price_temp.png')
     text = pytesseract.image_to_string(img)
     return text
 
