@@ -15,13 +15,7 @@ def main():
 
 def get_system_name(screenshot_name):
     screenshot = Image.open(screenshot_name).convert('LA')
-    width = screenshot.width
-    height = screenshot.height
-    left = 343
-    top = 940
-    right = width - 1100
-    bottom = height - 81
-    img_crop = screenshot.crop((left, top, right, bottom))
+    img_crop = crop_image(screenshot, left=343, top=940, right_offset=1100, bottom_offset=81)
     img_crop.save('temp_files/System_temp.png')
     img = cv2.imread('temp_files/System_temp.png')
     text = pytesseract.image_to_string(img)
@@ -30,7 +24,7 @@ def get_system_name(screenshot_name):
 
 def get_item_name(screenshot_name):
     screenshot = Image.open(screenshot_name).convert('LA')
-    img_crop = crop_image(screenshot, 1165, 250, 320, 793)
+    img_crop = crop_image(screenshot, left=1165, top=250, right_offset=320, bottom_offset=793)
     img_crop.save('temp_files/Item_temp.png')
     img = cv2.imread('temp_files/Item_temp.png')
     text = pytesseract.image_to_string(img)
@@ -39,13 +33,7 @@ def get_item_name(screenshot_name):
 
 def get_item_price(screenshot_name):
     screenshot = Image.open(screenshot_name).convert('LA')
-    width = screenshot.width
-    height = screenshot.height
-    left = 1750
-    top = 250
-    right = width - 0
-    bottom = height - 780
-    img_crop = screenshot.crop((left, top, right, bottom))
+    img_crop = crop_image(screenshot, left=1750, top=250, right_offset=0, bottom_offset=780)
     img_crop.save('temp_files/Item_price_temp.png')
     img = cv2.imread('temp_files/Item_price_temp.png')
     text = pytesseract.image_to_string(img)
