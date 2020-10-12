@@ -6,10 +6,9 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Users\dayzi\AppData\Local\Tesseract
 
 
 def main():
-    screenshot_name = "Selling.png"
+    screenshot_name = "Buying.png"
     system_name = get_system_name(screenshot_name)
-    print(system_name)
-
+    print(system_name[:-2])
 
 def get_system_name(screenshot_name):
     screenshot = Image.open(screenshot_name).convert('LA')
@@ -24,6 +23,9 @@ def get_system_name(screenshot_name):
     img = cv2.imread('temp_files/System_temp.png')
     text = pytesseract.image_to_string(img)
     return text
+
+
+# def get_item_name(screenshot_name)
 
 
 if __name__ == '__main__':
