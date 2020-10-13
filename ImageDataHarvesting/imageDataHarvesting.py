@@ -8,49 +8,40 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Users\dayzi\AppData\Local\Tesseract
 def main():
     screenshot_name = "Buying.png"
     grayscale_screenshot = Image.open(screenshot_name).convert('LA')
-    system_name = get_system_name(grayscale_screenshot)
+    # system_name = get_system_name(grayscale_screenshot)
     item_name = get_item_name(grayscale_screenshot)
-    item_price = get_item_price(grayscale_screenshot)
-    not_finished = True
-    top_coordinates = [289, 388, 505, 616, 725, 0]
-    bottom_offset_coordinates = [770, 660, 550, 440, 330, 0]
-
-    i = 0
-    while not_finished:
-        is_an_item = check_is_item(grayscale_screenshot, top_coordinates[i], bottom_offset_coordinates[i])
-        not_finished = is_an_item
-        i += 1
-    number_of_items = i - 1
+    # item_price = get_item_price(grayscale_screenshot)
+    # print(item_name,system_name,item_price)
+    print(item_name)
+    # not_finished = True
+    # top_coordinates = [289, 388, 505, 616, 725, 0]
+    # bottom_offset_coordinates = [770, 660, 550, 440, 330, 0]
+    #
+    # i = 0
+    # while not_finished:
+    #     is_an_item = check_is_item(grayscale_screenshot, top_coordinates[i], bottom_offset_coordinates[i])
+    #     not_finished = is_an_item
+    #     i += 1
+    # number_of_items = i - 1
 
 
 def check_is_item(screenshot, top, bottom_offset):
     # top in item 4 = 615 or 616 need a check
-    # img_crop = crop_image(screenshot, left=1180, top=388, right_offset=670, bottom_offset=660)
-    # img_crop = crop_image(screenshot, left=1180, top=505, right_offset=670, bottom_offset=550)
-    # img_crop = crop_image(screenshot, left=1180, top=616, right_offset=670, bottom_offset=440)
-    # img_crop = crop_image(screenshot, left=1180, top=725, right_offset=670, bottom_offset=330)
     img_crop = crop_image(screenshot, left=1180, top=top, right_offset=670, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'check_is_item')
     text = text[:-3]
     return text == "Price"
 
 
-def get_system_name(screenshot):
-    img_crop = crop_image(screenshot, left=310, top=940, right_offset=1100, bottom_offset=81)
-    text = extract_text(img_crop, 'system_temp')
-    text = text.lstrip("-")
-    text = text.lstrip()
-    text = text[:-2]
-    return text
-
-
 def get_item_name(screenshot):
-    img_crop = crop_image(screenshot, left=1165, top=255, right_offset=320, bottom_offset=791)
+    # img_crop = crop_image(screenshot, left=1170, top=250, right_offset=0, bottom_offset=750)
+    img_crop = crop_image(screenshot, left=1170, top=350, right_offset=0, bottom_offset=630)
+    # img_crop = crop_image(screenshot, left=1165, top=255, right_offset=320, bottom_offset=791)
     # img_crop = crop_image(screenshot, left=1165, top=365, right_offset=320, bottom_offset=681)
     # img_crop = crop_image(screenshot, left=1165, top=455, right_offset=320, bottom_offset=571)
     # img_crop = crop_image(screenshot, left=1165, top=555, right_offset=320, bottom_offset=459)
     # img_crop = crop_image(screenshot, left=1165, top=655, right_offset=320, bottom_offset=349)
-    text = extract_text(img_crop, 'item_temp')
+    text = extract_text(img_crop, 'item_name_temp')
     text = text[:-2]
     return text
 
@@ -70,6 +61,15 @@ def get_item_price(screenshot):
         img_crop = crop_image(screenshot, left=1750, top=250, right_offset=-20, bottom_offset=780)
         text = extract_text(img_crop, 'price_temp')
         text = int(text.replace(',', ''))
+    return text
+
+
+def get_system_name(screenshot):
+    img_crop = crop_image(screenshot, left=310, top=940, right_offset=1100, bottom_offset=81)
+    text = extract_text(img_crop, 'system_temp')
+    text = text.lstrip("-")
+    text = text.lstrip()
+    text = text[:-2]
     return text
 
 
