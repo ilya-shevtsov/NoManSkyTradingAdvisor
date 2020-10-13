@@ -8,16 +8,25 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Users\dayzi\AppData\Local\Tesseract
 def main():
     screenshot_name = "Buying.png"
     grayscale_screenshot = Image.open(screenshot_name).convert('LA')
-    system_name = get_system_name(grayscale_screenshot)
-    item_name = get_item_name(grayscale_screenshot)
-    item_price = get_item_price(grayscale_screenshot)
-    print(item_name, system_name, item_price)
+    # system_name = get_system_name(grayscale_screenshot)
+    # item_name = get_item_name(grayscale_screenshot)
+    # item_price = get_item_price(grayscale_screenshot)
+    is_an_item = check_is_item(grayscale_screenshot)
+    print(is_an_item)
+    # print(is_an_item,item_name, system_name, item_price)
 
 
-# def getting_list_of_item(screenshot):
-#     img_crop = crop_image(screenshot, left=1165, top=250, right_offset=320, bottom_offset=793)
-#     for item in range(1):
-#         left -
+def check_is_item(screenshot):
+    # img_crop = crop_image(screenshot, left=1180, top=289, right_offset=670, bottom_offset=770)
+    # img_crop = crop_image(screenshot, left=1180, top=388, right_offset=670, bottom_offset=660)
+    # img_crop = crop_image(screenshot, left=1180, top=505, right_offset=670, bottom_offset=550)
+    # top = 615 or 616
+    img_crop = crop_image(screenshot, left=1180, top=615, right_offset=670, bottom_offset=440)
+    img_crop.save('temp_files/check_is_item_temp.png')
+    img = cv2.imread('temp_files/check_is_item_temp.png')
+    text = pytesseract.image_to_string(img)
+    text = text[:-3]
+    return text == "Price"
 
 
 def get_system_name(screenshot):
