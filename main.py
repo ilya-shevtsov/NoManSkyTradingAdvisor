@@ -43,8 +43,7 @@ def analyze_data(data_frame):
 
 def visualize(data_frame):
     b = data_frame.sort_values(['Buying', 'Selling'])
-    print(b)
-    # visualize_in_browser(b)
+    visualize_in_browser(b)
 
 
 def visualize_in_browser(data):

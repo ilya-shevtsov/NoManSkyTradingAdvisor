@@ -8,12 +8,10 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Users\dayzi\AppData\Local\Tesseract
 def main():
     screenshot_name = "Buying.png"
     grayscale_screenshot = Image.open(screenshot_name).convert('LA')
-    # system_name = get_system_name(grayscale_screenshot)
+    system_name = get_system_name(grayscale_screenshot)
     item_name = get_item_name(grayscale_screenshot)
-    # item_price = get_item_price(grayscale_screenshot)
-    # print(item_name[:-2], system_name[:-2], item_price[:-2])
-    print(item_name[:-2])
-
+    item_price = get_item_price(grayscale_screenshot)
+    print(item_name[:-2], system_name[:-2], item_price)
 
 
 # def getting_list_of_item(screenshot):
@@ -31,11 +29,11 @@ def get_system_name(screenshot):
 
 
 def get_item_name(screenshot):
-    #1 img_crop = crop_image(screenshot, left=1165, top=255, right_offset=320, bottom_offset=790)
-    #2 img_crop = crop_image(screenshot, left=1165, top=355, right_offset=320, bottom_offset=680)
-    #3 img_crop = crop_image(screenshot, left=1165, top=455, right_offset=320, bottom_offset=570)
-    #4 img_crop = crop_image(screenshot, left=1165, top=555, right_offset=320, bottom_offset=459)
-    #5 img_crop = crop_image(screenshot, left=1165, top=655, right_offset=320, bottom_offset=349)
+    # 1 img_crop = crop_image(screenshot, left=1165, top=255, right_offset=320, bottom_offset=791)
+    # 2img_crop = crop_image(screenshot, left=1165, top=355, right_offset=320, bottom_offset=681)
+    # 3 img_crop = crop_image(screenshot, left=1165, top=455, right_offset=320, bottom_offset=571)
+    # 4 img_crop = crop_image(screenshot, left=1165, top=555, right_offset=320, bottom_offset=459)
+    # 5 img_crop = crop_image(screenshot, left=1165, top=655, right_offset=320, bottom_offset=349)
     img_crop.save('temp_files/Item_temp.png')
     img = cv2.imread('temp_files/Item_temp.png')
     text = pytesseract.image_to_string(img)
@@ -43,10 +41,20 @@ def get_item_name(screenshot):
 
 
 def get_item_price(screenshot):
-    img_crop = crop_image(screenshot, left=1750, top=250, right_offset=0, bottom_offset=780)
+    img_crop = crop_image(screenshot, left=1740, top=250, right_offset=-20, bottom_offset=780)
     img_crop.save('temp_files/Item_price_temp.png')
     img = cv2.imread('temp_files/Item_price_temp.png')
     text = pytesseract.image_to_string(img)
+    try:
+        text = int(text.replace(',', ''))
+        text = int(text)
+    except ValueError:
+        img_crop = crop_image(screenshot, left=1750, top=250, right_offset=-20, bottom_offset=780)
+        img_crop.save('temp_files/Item_price_temp.png')
+        img = cv2.imread('temp_files/Item_price_temp.png')
+        text = pytesseract.image_to_string(img)
+        text = int(text)
+
     return text
 
 
