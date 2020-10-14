@@ -24,7 +24,7 @@ def analyze_data(data_frame):
     for ind in sorted_data.index:
         if sorted_data['Buying'][ind] > sorted_data['Selling'][ind]:
             sorted_data = sorted_data.drop([ind])
-
+    sorted_data = sorted_data.reset_index(drop=True)
     for ind in sorted_data.index:
         price_buying = sorted_data['Buying'][ind]
         if math.isnan(price_buying):
