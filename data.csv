@@ -1,95 +1,95 @@
 ﻿ItemID;SystemID;Buying;Selling
 Autonomous Positioning Unit;Ageoralc;0;39784
-Decommissioned Circuit Board;Ageoralc;0;1805
-Ion Sphere;Ageoralc;0;22343
-Quantum Accelerator;Ageoralc;0;63640
-Welding Soap;Ageoralc;0;10051
 Autonomous Positioning Unit;Angelsk ;0;40111
-Decommissioned Circuit Board;Angelsk ;0;1817
-Ion Capacitor;Angelsk ;0;22168
-Quantum Accelerator;Angelsk ;0;63519
-Welding Soap;Angelsk ;0;10057
 Autonomous Positioning Unit;Busahachi;0;37834
-Decommissioned Circuit Board;Busahachi;0;1635
-Ion Capacitor;Busahachi;0;20779
-Quantum Accelerator;Busahachi;0;61079
-Welding Soap;Busahachi;0;9145
+Bromide Salt;Vouzei;0;21645
 Comet Droplets;Danogda;0;18076
+Comet Droplets;Gobori-Uoy;0;21383
+Comet Droplets;Isbetsu;0;23181
+Comet Droplets;Rugunpo VIII;0;21965
+Decommissioned Circuit Board;Ageoralc;0;1805
+Decommissioned Circuit Board;Angelsk ;0;1817
+Decommissioned Circuit Board;Busahachi;0;1635
 Decrypted User Data;Danogda;0;1512
-Ion Sphere;Danogda;0;34708
-Spark Canister;Danogda;0;23726
-Star Silk;Danogda;0;8961
-Teleport Coordinators;Danogda;0;59687
+Decrypted User Data;Gobori-Uoy;0;1730
+Decrypted User Data;Isbetsu;0;1930
+Decrypted User Data;Rugunpo VIII;0;1809
+De-Scented Pheromone Bottle;Ekinov;0;1841
+De-Scented Pheromone Bottle;Haiuts-Desyn;0;1920
+De-Scented Pheromone Bottle;Iizumi-Ketsa;0;1891
+De-Scented Pheromone Bottle;Prolym III;0;1869
+Dirt;Vouzei;0;1744
 Enormous Metal Cog;Davliaiut;0;1915
+Experemental Power Fluid;Isselbu IV;0;38755
+Experemental Power Fluid;Kikuse-Rekulo V;0;38030
+Experemental Power Fluid;Uskazaray;0;37717
+Experemental Power Fluid;Vameshai;0;40506
+Five Dimensional Torus;Koyano-Noqabg;0;38648
+Fusion Core;Isselbu IV;0;61706
+Fusion Core;Kikuse-Rekulo V;0;60693
+Fusion Core;Uskazaray;0;59706
+Fusion Core;Vameshai;0;63606
 High Capacity Vector Compressor;Davliaiut;0;64329
 Holographic Crankshaft;Davliaiut;0;41507
-Non-Stick Piston;Davliaiut;0;10561
-Six-Pronged Mesh Decoupler;Davliaiut;0;22844
-De-Scented Pheromone Bottle;Ekinov;0;1841
-Instability Injector;Ekinov;0;22286
-Neural Duct;Ekinov;0;64168
-Neutron Microscope;Ekinov;0;10303
-Organic Piping;Ekinov;0;40363
-Comet Droplets;Gobori-Uoy;0;21383
-Decrypted User Data;Gobori-Uoy;0;1730
-Ion Sphere;Gobori-Uoy;0;38881
-Star Silk;Gobori-Uoy;0;9663
-Teleport Coordinators;Gobori-Uoy;0;62308
-De-Scented Pheromone Bottle;Haiuts-Desyn;0;1920
-Instability Injector;Haiuts-Desyn;0;22749
-Neural Duct;Haiuts-Desyn;0;64841
-Neutron Microscope;Haiuts-Desyn;0;10598
-Organic Piping;Haiuts-Desyn;0;41429
-De-Scented Pheromone Bottle;Iizumi-Ketsa;0;1891
-Instability Injector;Iizumi-Ketsa;0;22685
-Neural Duct;Iizumi-Ketsa;0;64213
-Neutron Microscope;Iizumi-Ketsa;0;10477
-Organic Piping;Iizumi-Ketsa;0;41352
-Comet Droplets;Isbetsu;0;23181
-Decrypted User Data;Isbetsu;0;1930
-Ion Sphere;Isbetsu;0;41203
-Star Silk;Isbetsu;0;10633
-Teleport Coordinators;Isbetsu;0;65674
-Experemental Power Fluid;Isselbu IV;0;38755
-Fusion Core;Isselbu IV;0;61706
 Industrial-Grade Battery;Isselbu IV;0;9473
-Ohmic Gel;Isselbu IV;0;21100
-Spark Canister;Isselbu IV;0;1680
-Experemental Power Fluid;Kikuse-Rekulo V;0;38030
-Fusion Core;Kikuse-Rekulo V;0;60693
 Industrial-Grade Battery;Kikuse-Rekulo V;0;9157
-Ohmic Gel;Kikuse-Rekulo V;0;20491
-Spark Canister;Kikuse-Rekulo V;0;1650
-Five Dimensional Torus;Koyano-Noqabg;0;38648
-Nanotube Crate;Koyano-Noqabg;0;1733
-Optical Solvent;Koyano-Noqabg;0;21339
-Self-Repairing Heridium;Koyano-Noqabg;0;9476
-Superconducting Fiber;Koyano-Noqabg;0;61722
-De-Scented Pheromone Bottle;Prolym III;0;1869
-Instability Injector;Prolym III;0;22591
-Neural Duct;Prolym III;0;64469
-Neutron Microscope;Prolym III;0;10339
-Organic Piping;Prolym III;0;40800
-Comet Droplets;Rugunpo VIII;0;21965
-Decrypted User Data;Rugunpo VIII;0;1809
-Ion Sphere;Rugunpo VIII;0;40309
-Star Silk;Rugunpo VIII;0;10044
-Teleport Coordinators;Rugunpo VIII;0;63478
-Experemental Power Fluid;Uskazaray;0;37717
-Fusion Core;Uskazaray;0;59706
 Industrial-Grade Battery;Uskazaray;0;9089
-Ohmic Gel;Uskazaray;0;20433
-Spark Canister;Uskazaray;0;1600
-Experemental Power Fluid;Vameshai;0;40506
-Fusion Core;Vameshai;0;63606
 Industrial-Grade Battery;Vameshai;0;10221
+Instability Injector;Ekinov;0;22286
+Instability Injector;Haiuts-Desyn;0;22749
+Instability Injector;Iizumi-Ketsa;0;22685
+Instability Injector;Prolym III;0;22591
+Ion Capacitor;Angelsk ;0;22168
+Ion Capacitor;Busahachi;0;20779
+Ion Sphere;Ageoralc;0;22343
+Ion Sphere;Danogda;0;34708
+Ion Sphere;Gobori-Uoy;0;38881
+Ion Sphere;Isbetsu;0;41203
+Ion Sphere;Rugunpo VIII;0;40309
+Nanotube Crate;Koyano-Noqabg;0;1733
+Neural Duct;Ekinov;0;64168
+Neural Duct;Haiuts-Desyn;0;64841
+Neural Duct;Iizumi-Ketsa;0;64213
+Neural Duct;Prolym III;0;64469
+Neutron Microscope;Ekinov;0;10303
+Neutron Microscope;Haiuts-Desyn;0;10598
+Neutron Microscope;Iizumi-Ketsa;0;10477
+Neutron Microscope;Prolym III;0;10339
+Non-Stick Piston;Davliaiut;0;10561
+Ohmic Gel;Isselbu IV;0;21100
+Ohmic Gel;Kikuse-Rekulo V;0;20491
+Ohmic Gel;Uskazaray;0;20433
 Ohmic Gel;Vameshai;0;22265
-Spark Canister;Vameshai;0;1831
-Bromide Salt;Vouzei;0;21645
-Dirt;Vouzei;0;1744
+Optical Solvent;Koyano-Noqabg;0;21339
+Organic Piping;Ekinov;0;40363
+Organic Piping;Haiuts-Desyn;0;41429
+Organic Piping;Iizumi-Ketsa;0;41352
+Organic Piping;Prolym III;0;40800
 Polychromic Zirconium;Vouzei;0;39373
+Quantum Accelerator;Ageoralc;0;63640
+Quantum Accelerator;Angelsk ;0;63519
+Quantum Accelerator;Busahachi;0;61079
 Re-latticed Arc Crystal;Vouzei;0;62232
+Self-Repairing Heridium;Koyano-Noqabg;0;9476
+Six-Pronged Mesh Decoupler;Davliaiut;0;22844
+Spark Canister;Danogda;0;23726
+Spark Canister;Isselbu IV;0;1680
+Spark Canister;Kikuse-Rekulo V;0;1650
+Spark Canister;Uskazaray;0;1600
+Spark Canister;Vameshai;0;1831
+Star Silk;Danogda;0;8961
+Star Silk;Gobori-Uoy;0;9663
+Star Silk;Isbetsu;0;10633
+Star Silk;Rugunpo VIII;0;10044
+Superconducting Fiber;Koyano-Noqabg;0;61722
+Teleport Coordinators;Danogda;0;59687
+Teleport Coordinators;Gobori-Uoy;0;62308
+Teleport Coordinators;Isbetsu;0;65674
+Teleport Coordinators;Rugunpo VIII;0;63478
 Unrefined Pyrite Grease;Vouzei;0;9726
+Welding Soap;Ageoralc;0;10051
+Welding Soap;Angelsk ;0;10057
+Welding Soap;Busahachi;0;9145
 Dirt;Kikuse-Rekulo V;701;0
 Nanotube Crate;Danogda;716;0
 Nanotube Crate;Sarogiya;723;0
@@ -99,8 +99,8 @@ Dirt;Vameshai;774;0
 Dirt;Isselbu IV;779;0
 Spark Canister;Angelsk ;782;0
 Nanotube Crate;Isbetsu;783;0
+Decrypted User Data;Prolym III;797;0
 Spark Canister;Busahachi;797;0
-Decrypted User Data;Prolym III;796;0
 Spark Canister;Ageoralc;809;0
 De-Scented Pheromone Bottle;Koyano-Noqabg;812;0
 Decrypted User Data;Haiuts-Desyn;821;0
