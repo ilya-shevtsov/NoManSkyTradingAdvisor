@@ -56,10 +56,6 @@ def get_item_name(screenshot, top, bottom_offset):
 def get_item_price(screenshot, top, bottom_offset):
     # bottom in item 4 = 460 or 455 need a check
     img_crop = crop_image(screenshot, left=1741, top=top, right_offset=-20, bottom_offset=bottom_offset)
-    # img_crop = crop_image(screenshot, left=1741, top=350, right_offset=-20, bottom_offset=680)
-    # img_crop = crop_image(screenshot, left=1741, top=485, right_offset=-20, bottom_offset=570)
-    # img_crop = crop_image(screenshot, left=1741, top=560, right_offset=-20, bottom_offset=455)
-    # img_crop = crop_image(screenshot, left=1741, top=660, right_offset=-20, bottom_offset=350)
     text = extract_text(img_crop, 'price_temp')
     text = text[:-2]
     try:
