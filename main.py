@@ -25,13 +25,14 @@ def analyze_data(data_frame):
         if sorted_data['Buying'][ind] > sorted_data['Selling'][ind]:
             sorted_data = sorted_data.drop([ind])
     sorted_data = sorted_data.reset_index(drop=True)
+
     for ind in sorted_data.index:
         price_buying = sorted_data['Buying'][ind]
-        price_buying_itemid = sorted_data['ItemID'][ind]
+        price_buying_item_id = sorted_data['ItemID'][ind]
         if math.isnan(price_buying):
             continue
         indexed_buying = (data_frame[data_frame.Buying.notnull()]).set_index(['ItemID', 'Buying'])
-        sorted_data.loc[ind, 'Buying'] = indexed_buying['SystemID'][(price_buying_itemid, price_buying)]
+        sorted_data.loc[ind, 'Buying'] = indexed_buying['SystemID'][(price_buying_item_id, price_buying)]
 
     for ind in sorted_data.index:
         price_selling = sorted_data['Selling'][ind]
