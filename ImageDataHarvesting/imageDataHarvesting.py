@@ -71,7 +71,6 @@ def get_system_name(screenshot):
     text.remove('System')
     ' '.join(text)
     text = f"{' '.join(text)}"
-    print(text)
     return text
 
 
