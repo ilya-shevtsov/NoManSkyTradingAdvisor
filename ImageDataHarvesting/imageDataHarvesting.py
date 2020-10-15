@@ -52,7 +52,6 @@ def get_item_name(screenshot, top, bottom_offset):
 def get_item_price(screenshot, top, bottom_offset):
     img_crop = crop_image(screenshot, left=1620, top=top, right_offset=-20, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'price_temp')
-    # print(text)
     text = text[:-2]
     text = text.split()
     text = [x.replace(',', '') for x in text if x.replace(',', '').isnumeric()]
