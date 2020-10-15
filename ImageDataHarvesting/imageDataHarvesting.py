@@ -50,13 +50,7 @@ def get_item_name(screenshot, top, bottom_offset):
 
 
 def get_item_price(screenshot, top, bottom_offset):
-    img_crop = crop_image(screenshot, left=1620, top=top, right_offset=-20, bottom_offset=bottom_offset)
-    text = extract_text(img_crop, 'price_temp')
-    text = text[:-2]
-    text = text.split()
-    text = [x.replace(',', '') for x in text if x.replace(',', '').isnumeric()]
-    ' '.join(text)
-    text = f"{' '.join(text)}"
+    text = price_check(screenshot, 1620, top, bottom_offset)
     try:
         text = int(text)
     except ValueError:
@@ -68,6 +62,17 @@ def get_item_price(screenshot, top, bottom_offset):
         ' '.join(text)
         text = f"{' '.join(text)}"
         text = int(text)
+    return text
+
+
+def price_check(screenshot, left_coordinates, top, bottom_offset):
+    img_crop = crop_image(screenshot, left=left_coordinates, top=top, right_offset=-20, bottom_offset=bottom_offset)
+    text = extract_text(img_crop, 'price_temp')
+    text = text[:-2]
+    text = text.split()
+    text = [x.replace(',', '') for x in text if x.replace(',', '').isnumeric()]
+    ' '.join(text)
+    text = f"{' '.join(text)}"
     return text
 
 
