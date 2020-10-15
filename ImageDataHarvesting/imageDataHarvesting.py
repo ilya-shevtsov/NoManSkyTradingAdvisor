@@ -8,16 +8,12 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Users\dayzi\AppData\Local\Tesseract
 def main():
     screenshot_name = "Buying.png"
     grayscale_screenshot = Image.open(screenshot_name).convert('LA')
-    # system_name = get_system_name(grayscale_screenshot)
-    # item_name = get_item_name(grayscale_screenshot)
-    # item_price = get_item_price(grayscale_screenshot)
-    # print(item_name, system_name, item_price)
 
     top_coordinates_item = [255, 365, 455, 555, 655]
     bottom_offset_coordinates_item = [791, 681, 571, 459, 349]
 
-    top_coordinates_price = [250, 350, 485, 560, 660]
-    bottom_offset_coordinates_price = [780, 680, 570, 455, 350]
+    top_coordinates_price = [250, 350, 485, 560, 680]
+    bottom_offset_coordinates_price = [780, 675, 570, 460, 340]
 
     not_finished = True
     top_coordinates_check = [304, 414, 524, 634, 744, 0]
@@ -54,15 +50,25 @@ def get_item_name(screenshot, top, bottom_offset):
 
 
 def get_item_price(screenshot, top, bottom_offset):
-    img_crop = crop_image(screenshot, left=1741, top=top, right_offset=-20, bottom_offset=bottom_offset)
+    img_crop = crop_image(screenshot, left=1620, top=top, right_offset=-20, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'price_temp')
+    # print(text)
     text = text[:-2]
+    text = text.split()
+    text = [x.replace(',', '') for x in text if x.replace(',', '').isnumeric()]
+    ' '.join(text)
+    text = f"{' '.join(text)}"
     try:
-        text = int(text.replace(',', ''))
+        text = int(text)
     except ValueError:
-        img_crop = crop_image(screenshot, left=1750, top=top, right_offset=-20, bottom_offset=bottom_offset)
+        img_crop = crop_image(screenshot, left=1600, top=top, right_offset=-20, bottom_offset=bottom_offset)
         text = extract_text(img_crop, 'price_temp')
-        text = int(text.replace(',', ''))
+        text = text[:-2]
+        text = text.split()
+        text = [x.replace(',', '') for x in text if x.replace(',', '').isnumeric()]
+        ' '.join(text)
+        text = f"{' '.join(text)}"
+        text = int(text)
     return text
 
 
@@ -70,8 +76,7 @@ def get_system_name(screenshot):
     img_crop = crop_image(screenshot, left=150, top=930, right_offset=1100, bottom_offset=80)
     text = extract_text(img_crop, 'system_temp')
     text = text.split()
-    text.remove('-')
-    text.remove('System')
+    text = [x for x in text if x not in ['-', 'System']]
     ' '.join(text)
     text = f"{' '.join(text)}"
     return text
