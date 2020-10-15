@@ -16,10 +16,13 @@ def main():
     top_coordinates_item = [255, 365, 455, 555, 655]
     bottom_offset_coordinates_item = [791, 681, 571, 459, 349]
 
+    top_coordinates_price = [250, 350, 485, 560, 660]
+    bottom_offset_coordinates_price = [780, 680, 570, 455, 350]
+
     not_finished = True
     top_coordinates_check = [289, 388, 505, 616, 725, 0]
     bottom_offset_coordinates_check = [770, 660, 550, 440, 330, 0]
-    
+
     i = 0
     while not_finished:
         is_an_item = check_is_item(grayscale_screenshot, top_coordinates_check[i], bottom_offset_coordinates_check[i])
@@ -30,8 +33,10 @@ def main():
     a = 0
     while a < number_of_items:
         item_name = get_item_name(grayscale_screenshot, top_coordinates_item[a], bottom_offset_coordinates_item[a])
+        system_name = get_system_name(grayscale_screenshot)
+        item_price = get_item_price(grayscale_screenshot, top_coordinates_price[a], bottom_offset_coordinates_price[a])
         a += 1
-        print(item_name)
+        print(item_name, system_name, item_price)
 
 
 def check_is_item(screenshot, top, bottom_offset):
@@ -43,20 +48,14 @@ def check_is_item(screenshot, top, bottom_offset):
 
 def get_item_name(screenshot, top, bottom_offset):
     img_crop = crop_image(screenshot, left=1165, top=top, right_offset=320, bottom_offset=bottom_offset)
-    # img_crop = crop_image(screenshot, left=1165, top=350, right_offset=320, bottom_offset=690)
-    # img_crop = crop_image(screenshot, left=1165, top=255, right_offset=320, bottom_offset=791)
-    # img_crop = crop_image(screenshot, left=1165, top=365, right_offset=320, bottom_offset=681)
-    # img_crop = crop_image(screenshot, left=1165, top=455, right_offset=320, bottom_offset=571)
-    # img_crop = crop_image(screenshot, left=1165, top=555, right_offset=320, bottom_offset=459)
-    # img_crop = crop_image(screenshot, left=1165, top=655, right_offset=320, bottom_offset=349)
     text = extract_text(img_crop, 'item_name_temp')
     text = text[:-2]
     return text
 
 
-def get_item_price(screenshot):
+def get_item_price(screenshot, top, bottom_offset):
     # bottom in item 4 = 460 or 455 need a check
-    img_crop = crop_image(screenshot, left=1741, top=250, right_offset=-20, bottom_offset=780)
+    img_crop = crop_image(screenshot, left=1741, top=top, right_offset=-20, bottom_offset=bottom_offset)
     # img_crop = crop_image(screenshot, left=1741, top=350, right_offset=-20, bottom_offset=680)
     # img_crop = crop_image(screenshot, left=1741, top=485, right_offset=-20, bottom_offset=570)
     # img_crop = crop_image(screenshot, left=1741, top=560, right_offset=-20, bottom_offset=455)
