@@ -8,33 +8,42 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Users\dayzi\AppData\Local\Tesseract
 def main():
     screenshot_name = "Buying.png"
     grayscale_screenshot = Image.open(screenshot_name).convert('LA')
-    system_name = get_system_name(grayscale_screenshot)
-    item_name = get_item_name(grayscale_screenshot)
-    item_price = get_item_price(grayscale_screenshot)
-    print(item_name,system_name,item_price)
+    # system_name = get_system_name(grayscale_screenshot)
+    # item_name = get_item_name(grayscale_screenshot)
+    # item_price = get_item_price(grayscale_screenshot)
+    # print(item_name, system_name, item_price)
+
+    top_coordinates_item = [255, 365, 455, 555, 655]
+    bottom_offset_coordinates_item = [791, 681, 571, 459, 349]
 
     not_finished = True
-    top_coordinates = [289, 388, 505, 616, 725, 0]
-    bottom_offset_coordinates = [770, 660, 550, 440, 330, 0]
+    top_coordinates_check = [289, 388, 505, 616, 725, 0]
+    bottom_offset_coordinates_check = [770, 660, 550, 440, 330, 0]
+    
     i = 0
     while not_finished:
-        is_an_item = check_is_item(grayscale_screenshot, top_coordinates[i], bottom_offset_coordinates[i])
+        is_an_item = check_is_item(grayscale_screenshot, top_coordinates_check[i], bottom_offset_coordinates_check[i])
         not_finished = is_an_item
         i += 1
     number_of_items = i - 1
 
+    a = 0
+    while a < number_of_items:
+        item_name = get_item_name(grayscale_screenshot, top_coordinates_item[a], bottom_offset_coordinates_item[a])
+        a += 1
+        print(item_name)
+
 
 def check_is_item(screenshot, top, bottom_offset):
-    # top in item 4 = 615 or 616 need a check
     img_crop = crop_image(screenshot, left=1180, top=top, right_offset=670, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'check_is_item')
     text = text[:-3]
     return text == "Price"
 
 
-def get_item_name(screenshot):
-    img_crop = crop_image(screenshot, left=1170, top=250, right_offset=320, bottom_offset=790)
-    # img_crop = crop_image(screenshot, left=1170, top=350, right_offset=320, bottom_offset=690)
+def get_item_name(screenshot, top, bottom_offset):
+    img_crop = crop_image(screenshot, left=1165, top=top, right_offset=320, bottom_offset=bottom_offset)
+    # img_crop = crop_image(screenshot, left=1165, top=350, right_offset=320, bottom_offset=690)
     # img_crop = crop_image(screenshot, left=1165, top=255, right_offset=320, bottom_offset=791)
     # img_crop = crop_image(screenshot, left=1165, top=365, right_offset=320, bottom_offset=681)
     # img_crop = crop_image(screenshot, left=1165, top=455, right_offset=320, bottom_offset=571)
