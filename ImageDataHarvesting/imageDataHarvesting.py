@@ -54,14 +54,13 @@ def get_item_name(screenshot, top, bottom_offset):
 
 
 def get_item_price(screenshot, top, bottom_offset):
-    # bottom in item 4 = 460 or 455 need a check
     img_crop = crop_image(screenshot, left=1741, top=top, right_offset=-20, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'price_temp')
     text = text[:-2]
     try:
         text = int(text.replace(',', ''))
     except ValueError:
-        img_crop = crop_image(screenshot, left=1750, top=250, right_offset=-20, bottom_offset=780)
+        img_crop = crop_image(screenshot, left=1750, top=top, right_offset=-20, bottom_offset=bottom_offset)
         text = extract_text(img_crop, 'price_temp')
         text = int(text.replace(',', ''))
     return text
