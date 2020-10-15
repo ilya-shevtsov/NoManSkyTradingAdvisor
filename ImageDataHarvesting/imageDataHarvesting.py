@@ -19,19 +19,17 @@ def main():
     top_coordinates_check = [304, 414, 524, 634, 744, 0]
     bottom_offset_coordinates_check = [740, 635, 530, 425, 315, 0]
 
-    i = 0
+    item_index = 0
     while not_finished:
-        is_an_item = check_is_item(grayscale_screenshot, top_coordinates_check[i], bottom_offset_coordinates_check[i])
+        is_an_item = check_is_item(grayscale_screenshot, top_coordinates_check[item_index], bottom_offset_coordinates_check[item_index])
         not_finished = is_an_item
-        i += 1
-    number_of_items = i - 1
+        item_index += 1
+    number_of_items = item_index - 1
 
-    a = 0
-    while a < number_of_items:
-        item_name = get_item_name(grayscale_screenshot, top_coordinates_item[a], bottom_offset_coordinates_item[a])
+    for a in range(number_of_items):
         system_name = get_system_name(grayscale_screenshot)
+        item_name = get_item_name(grayscale_screenshot, top_coordinates_item[a], bottom_offset_coordinates_item[a])
         item_price = get_item_price(grayscale_screenshot, top_coordinates_price[a], bottom_offset_coordinates_price[a])
-        a += 1
         print(item_name, system_name, item_price)
 
 
