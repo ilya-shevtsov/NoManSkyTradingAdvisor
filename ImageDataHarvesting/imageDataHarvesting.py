@@ -20,8 +20,8 @@ def main():
     bottom_offset_coordinates_price = [780, 680, 570, 455, 350]
 
     not_finished = True
-    top_coordinates_check = [289, 388, 505, 616, 725, 0]
-    bottom_offset_coordinates_check = [770, 660, 550, 440, 330, 0]
+    top_coordinates_check = [304, 414, 524, 634, 744, 0]
+    bottom_offset_coordinates_check = [740, 635, 530, 425, 315, 0]
 
     i = 0
     while not_finished:
@@ -40,10 +40,10 @@ def main():
 
 
 def check_is_item(screenshot, top, bottom_offset):
-    img_crop = crop_image(screenshot, left=1180, top=top, right_offset=670, bottom_offset=bottom_offset)
+    img_crop = crop_image(screenshot, left=1180, top=top, right_offset=550, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'check_is_item')
     text = text[:-3]
-    return text == "Price"
+    return text == "Produced Locall"
 
 
 def get_item_name(screenshot, top, bottom_offset):
