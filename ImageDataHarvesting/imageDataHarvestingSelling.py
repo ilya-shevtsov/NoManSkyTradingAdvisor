@@ -108,6 +108,7 @@ def extract_text_price(img_crop, file_name):
     img_crop.save('temp_files/' + file_name + '.png')
     img_saved = cv2.imread('temp_files/' + file_name + '.png')
     img_enhanced = cv2.threshold(img_saved, 50, 255, cv2.THRESH_BINARY_INV)[1]
+    cv2.imwrite('temp_files/' + file_name + '.png', img_enhanced)
     text = pytesseract.image_to_string(img_enhanced)
     return text
 
