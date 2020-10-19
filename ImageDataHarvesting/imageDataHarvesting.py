@@ -2,22 +2,22 @@ import cv2
 import pytesseract
 from PIL import Image
 
-pytesseract.pytesseract.tesseract_cmd = r'C:\Users\dayzi\AppData\Local\Tesseract-OCR\tesseract.exe'
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 
 def main():
     screenshot_name = "Buying.png"
     grayscale_screenshot = Image.open(screenshot_name).convert('LA')
 
-    top_coordinates_item = [255, 365, 455, 555, 655]
-    bottom_offset_coordinates_item = [791, 680, 571, 459, 349]
+    top_coordinates_item = [255, 365, 475, 585, 695]
+    bottom_offset_coordinates_item = [795, 685, 575, 465, 355]
 
-    top_coordinates_price = [250, 350, 485, 560, 680]
-    bottom_offset_coordinates_price = [780, 675, 570, 460, 340]
+    top_coordinates_price = [250, 360, 470, 580, 690]
+    bottom_offset_coordinates_price = [780, 670, 560, 450, 340]
 
     not_finished = True
-    top_coordinates_check = [304, 414, 524, 634, 744, 0]
-    bottom_offset_coordinates_check = [740, 635, 530, 425, 315, 0]
+    top_coordinates_check = [305, 415, 525, 635, 745, 0]
+    bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 0]
 
     item_index = 0
     while not_finished:
