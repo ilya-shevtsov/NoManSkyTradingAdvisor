@@ -6,7 +6,7 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 
 
 def main():
-    screenshot_name = "Buying.png"
+    screenshot_name = "Selling.png"
     grayscale_screenshot = Image.open(screenshot_name).convert('LA')
 
     top_coordinates_item = [255, 355, 465, 575, 685]
@@ -39,10 +39,10 @@ def main():
 
 
 def check_is_item(screenshot, top, bottom_offset, item_index):
-    img_crop = crop_image(screenshot, left=1180, top=top, right_offset=550, bottom_offset=bottom_offset)
+    img_crop = crop_image(screenshot, left=1180, top=top, right_offset=500, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'check_is_item' + str(item_index))
     text = text[:-3]
-    return text == "Produced Locall"
+    return 'Economy' in text
 
 
 def get_item_name(screenshot, top, bottom_offset, item_index):
