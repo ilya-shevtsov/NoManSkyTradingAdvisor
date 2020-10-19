@@ -9,15 +9,15 @@ def main():
     screenshot_name = "Selling.png"
     grayscale_screenshot = Image.open(screenshot_name).convert('LA')
 
-    top_coordinates_item = [255, 355, 465, 575, 685]
-    bottom_offset_coordinates_item = [795, 685, 575, 465, 355]
+    top_coordinates_item = [255, 355, 465, 575, 685, 795, 905]
+    bottom_offset_coordinates_item = [795, 685, 575, 465, 355, 245, 135]
 
-    top_coordinates_price = [250, 360, 470, 580, 690]
-    bottom_offset_coordinates_price = [780, 670, 560, 450, 340]
+    top_coordinates_price = [250, 360, 470, 580, 690, 800, 910]
+    bottom_offset_coordinates_price = [780, 670, 560, 450, 340, 230, 120]
 
     not_finished = True
-    top_coordinates_check = [305, 415, 525, 635, 745, 0]
-    bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 0]
+    top_coordinates_check = [305, 415, 525, 635, 745, 855, 965, 0]
+    bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190, 80, 0]
 
     item_index = 0
     while not_finished:
