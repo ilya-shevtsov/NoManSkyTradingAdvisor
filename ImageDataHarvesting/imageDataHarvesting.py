@@ -53,17 +53,17 @@ def get_item_name(screenshot, top, bottom_offset, item_index):
 
 
 def get_item_price(screenshot, top, bottom_offset, item_index):
-    text = price_check(screenshot, 1620, top, bottom_offset, item_index)
+    text = price_check(screenshot, 1600, top, bottom_offset, item_index)
     try:
         text = int(text)
     except ValueError:
-        text = price_check(screenshot, 1600, top, bottom_offset, item_index)
+        text = price_check(screenshot, 1610, top, bottom_offset, item_index)
         text = int(text)
     return text
 
 
 def price_check(screenshot, left_coordinates, top, bottom_offset, item_index):
-    img_crop = crop_image(screenshot, left=left_coordinates, top=top, right_offset=-20, bottom_offset=bottom_offset)
+    img_crop = crop_image(screenshot, left=left_coordinates, top=top, right_offset=0, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'price_temp' + str(item_index))
     text = text[:-2]
     text = text.split()
