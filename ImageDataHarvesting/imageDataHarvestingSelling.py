@@ -69,7 +69,7 @@ def get_item_price(screenshot, top, bottom_offset, item_index):
 
 def read_price(screenshot, left_coordinate, top, bottom_offset, item_index):
     img_crop = crop_image(screenshot, left=left_coordinate, top=top, right_offset=0, bottom_offset=bottom_offset)
-    text = extract_text(img_crop, 'price_temp' + str(item_index))
+    text = extract_text_price(img_crop, 'price_temp' + str(item_index))
     text = text[:-2]
     text = text.split()
     text = [x.replace(',', '') for x in text if x.replace(',', '').isnumeric()]
@@ -101,6 +101,14 @@ def extract_text(img_crop, file_name):
     img_crop.save('temp_files/' + file_name + '.png')
     img = cv2.imread('temp_files/' + file_name + '.png')
     text = pytesseract.image_to_string(img)
+    return text
+
+
+def extract_text_price(img_crop, file_name):
+    img_crop.save('temp_files/' + file_name + '.png')
+    img_saved = cv2.imread('temp_files/' + file_name + '.png')
+    img_enhanced = cv2.threshold(img_saved, 50, 255, cv2.THRESH_BINARY_INV)[1]
+    text = pytesseract.image_to_string(img_enhanced)
     return text
 
 
