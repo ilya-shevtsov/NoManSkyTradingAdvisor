@@ -46,7 +46,7 @@ def check_is_item(screenshot, top, bottom_offset, item_index):
 
 
 def get_item_name(screenshot, top, bottom_offset, item_index):
-    img_crop = crop_image(screenshot, left=1165, top=top, right_offset=320, bottom_offset=bottom_offset)
+    img_crop = crop_image(screenshot, left=1165, top=top, right_offset=330, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'item_name_temp' + str(item_index))
     text = text[:-2]
     return text

@@ -9,15 +9,15 @@ def main():
     screenshot_name = "Selling.png"
     grayscale_screenshot = Image.open(screenshot_name).convert('LA')
 
-    top_coordinates_item = [255, 355, 465, 575, 685, 795, 905]
-    bottom_offset_coordinates_item = [795, 685, 575, 465, 355, 245, 135]
+    top_coordinates_item = [255, 355, 465, 575, 685, 795]
+    bottom_offset_coordinates_item = [795, 685, 575, 465, 355, 245]
 
-    top_coordinates_price = [250, 360, 470, 580, 690, 800, 910]
-    bottom_offset_coordinates_price = [780, 670, 560, 450, 340, 230, 120]
+    top_coordinates_price = [250, 360, 470, 580, 690, 800]
+    bottom_offset_coordinates_price = [780, 670, 560, 450, 340, 230]
 
     not_finished = True
-    top_coordinates_check = [305, 415, 525, 635, 745, 855, 965, 0]
-    bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190, 80, 0]
+    top_coordinates_check = [305, 415, 525, 635, 745, 855]
+    bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190]
 
     item_index = 0
     while not_finished:
@@ -27,11 +27,13 @@ def main():
             bottom_offset_coordinates_check[item_index],
             item_index
         )
-        not_finished = is_an_item
-        item_index += 1
-    number_of_items = item_index - 1
+        not_finished = not is_an_item
+        if not_finished:
+            item_index += 1
+    star_index = item_index
+    end_index = len(top_coordinates_check)
 
-    for a in range(number_of_items):
+    for a in range(star_index, end_index):
         system_name = get_system_name(grayscale_screenshot)
         item_name = get_item_name(grayscale_screenshot, top_coordinates_item[a], bottom_offset_coordinates_item[a], a)
         item_price = get_item_price(grayscale_screenshot, top_coordinates_price[a], bottom_offset_coordinates_price[a], a)
@@ -46,7 +48,7 @@ def check_is_item(screenshot, top, bottom_offset, item_index):
 
 
 def get_item_name(screenshot, top, bottom_offset, item_index):
-    img_crop = crop_image(screenshot, left=1165, top=top, right_offset=320, bottom_offset=bottom_offset)
+    img_crop = crop_image(screenshot, left=1165, top=top, right_offset=330, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'item_name_temp' + str(item_index))
     text = text[:-2]
     return text
