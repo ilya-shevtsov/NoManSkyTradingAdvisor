@@ -9,7 +9,7 @@ def main():
     screenshot_name = "Buying.png"
     grayscale_screenshot = Image.open(screenshot_name).convert('LA')
 
-    top_coordinates_item = [255, 365, 475, 585, 695]
+    top_coordinates_item = [255, 355, 465, 575, 685]
     bottom_offset_coordinates_item = [795, 685, 575, 465, 355]
 
     top_coordinates_price = [250, 360, 470, 580, 690]
@@ -53,17 +53,20 @@ def get_item_name(screenshot, top, bottom_offset, item_index):
 
 
 def get_item_price(screenshot, top, bottom_offset, item_index):
-    text = price_check(screenshot, 1600, top, bottom_offset, item_index)
-    try:
-        text = int(text)
-    except ValueError:
-        text = price_check(screenshot, 1610, top, bottom_offset, item_index)
-        text = int(text)
-    return text
+    left_coordinates = [1550, 1560, 1570, 1580, 1590, 1600, 1610, 1620, 1630, 1640, 1650, 1660]
+    item_price = 0
+    for coordinate in left_coordinates:
+        try:
+            text = read_price(screenshot, left_coordinate=coordinate, top=top, bottom_offset=bottom_offset, item_index=item_index)
+            item_price = int(text)
+        except ValueError:
+            continue
+        break
+    return item_price
 
 
-def price_check(screenshot, left_coordinates, top, bottom_offset, item_index):
-    img_crop = crop_image(screenshot, left=left_coordinates, top=top, right_offset=0, bottom_offset=bottom_offset)
+def read_price(screenshot, left_coordinate, top, bottom_offset, item_index):
+    img_crop = crop_image(screenshot, left=left_coordinate, top=top, right_offset=0, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'price_temp' + str(item_index))
     text = text[:-2]
     text = text.split()
