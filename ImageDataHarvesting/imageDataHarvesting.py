@@ -19,6 +19,7 @@ def main():
     bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190]
 
     item_check_list = checking_counting_item_buying(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check)
+    # item_check_list = checking_counting_item_selling(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check)
 
     for index, is_item in enumerate(item_check_list):
         if is_item:
@@ -46,11 +47,33 @@ def checking_counting_item_buying(bottom_offset_coordinates_check, grayscale_scr
     return item_check_list
 
 
+def checking_counting_item_selling(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check):
+    item_check_list = []
+    item_index = 0
+    while item_index < 6:
+        checking_if_item = check_is_item_selling(
+            grayscale_screenshot,
+            top_coordinates_check[item_index],
+            bottom_offset_coordinates_check[item_index],
+            item_index
+        )
+        item_index += 1
+        item_check_list.append(checking_if_item)
+    return item_check_list
+
+
 def check_is_item_buying(screenshot, top, bottom_offset, item_index):
     img_crop = crop_image(screenshot, left=1180, top=top, right_offset=550, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'check_is_item' + str(item_index))
     text = text[:-3]
     return text == 'Produced Locall' in text
+
+
+def check_is_item_selling(screenshot, top, bottom_offset, item_index):
+    img_crop = crop_image(screenshot, left=1180, top=top, right_offset=500, bottom_offset=bottom_offset)
+    text = extract_text(img_crop, 'check_is_item' + str(item_index))
+    text = text[:-3]
+    return 'Economy' in text
 
 
 def get_item_name(screenshot, top, bottom_offset, item_index):
@@ -101,6 +124,15 @@ def crop_image(screenshot, left, top, right_offset, bottom_offset):
     bottom = height - bottom_offset
     img_crop = screenshot.crop((left, top, right, bottom))
     return img_crop
+
+
+def extract_text_selling(img_crop, file_name):
+    img_crop.save('temp_files/' + file_name + '.png')
+    img_saved = cv2.imread('temp_files/' + file_name + '.png')
+    img_enhanced = cv2.threshold(img_saved, 50, 255, cv2.THRESH_BINARY_INV)[1]
+    cv2.imwrite('temp_files/' + file_name + '.png', img_enhanced)
+    text = pytesseract.image_to_string(img_enhanced)
+    return text
 
 
 def extract_text(img_crop, file_name):
