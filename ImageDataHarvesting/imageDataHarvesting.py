@@ -6,7 +6,8 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 
 
 def main():
-    screenshot_name = "Buying.png"
+    # screenshot_name = "Buying.png"
+    screenshot_name = "Selling.png"
     grayscale_screenshot = Image.open(screenshot_name).convert('LA')
 
     top_coordinates_item = [255, 355, 465, 575, 685, 795]
@@ -18,8 +19,8 @@ def main():
     top_coordinates_check = [305, 415, 525, 635, 745, 855]
     bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190]
 
-    item_check_list = checking_counting_item_buying(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check)
-    # item_check_list = checking_counting_item_selling(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check)
+    # item_check_list = checking_counting_item_buying(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check)
+    item_check_list = checking_counting_item_selling(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check)
 
     for index, is_item in enumerate(item_check_list):
         if is_item:
@@ -83,12 +84,12 @@ def get_item_name(screenshot, top, bottom_offset, item_index):
     return text
 
 
-def get_item_price(screenshot, top, bottom_offset, item_index):
+def get_item_price_selling(screenshot, top, bottom_offset, item_index):
     left_coordinates = [1550, 1560, 1570, 1580, 1590, 1600, 1610, 1620, 1630, 1640, 1650, 1660]
     item_price = 0
     for coordinate in left_coordinates:
         try:
-            text = read_price(screenshot, left_coordinate=coordinate, top=top, bottom_offset=bottom_offset, item_index=item_index)
+            text = read_price_selling(screenshot, left_coordinate=coordinate, top=top, bottom_offset=bottom_offset, item_index=item_index)
             item_price = int(text)
         except ValueError:
             continue
@@ -96,9 +97,33 @@ def get_item_price(screenshot, top, bottom_offset, item_index):
     return item_price
 
 
-def read_price(screenshot, left_coordinate, top, bottom_offset, item_index):
+def get_item_price_buying(screenshot, top, bottom_offset, item_index):
+    left_coordinates = [1550, 1560, 1570, 1580, 1590, 1600, 1610, 1620, 1630, 1640, 1650, 1660]
+    item_price = 0
+    for coordinate in left_coordinates:
+        try:
+            text = read_price_buying(screenshot, left_coordinate=coordinate, top=top, bottom_offset=bottom_offset, item_index=item_index)
+            item_price = int(text)
+        except ValueError:
+            continue
+        break
+    return item_price
+
+
+def read_price_buying(screenshot, left_coordinate, top, bottom_offset, item_index):
     img_crop = crop_image(screenshot, left=left_coordinate, top=top, right_offset=0, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'price_temp' + str(item_index))
+    text = text[:-2]
+    text = text.split()
+    text = [x.replace(',', '') for x in text if x.replace(',', '').isnumeric()]
+    ' '.join(text)
+    text = f"{' '.join(text)}"
+    return text
+
+
+def read_price_selling(screenshot, left_coordinate, top, bottom_offset, item_index):
+    img_crop = crop_image(screenshot, left=left_coordinate, top=top, right_offset=0, bottom_offset=bottom_offset)
+    text = extract_text_selling(img_crop, 'price_temp' + str(item_index))
     text = text[:-2]
     text = text.split()
     text = [x.replace(',', '') for x in text if x.replace(',', '').isnumeric()]

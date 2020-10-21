@@ -24,7 +24,7 @@ def main():
         if is_item:
             system_name = get_system_name(grayscale_screenshot)
             item_name = get_item_name(grayscale_screenshot, top_coordinates_item[index], bottom_offset_coordinates_item[index], index)
-            item_price = get_item_price(grayscale_screenshot, top_coordinates_price[index], bottom_offset_coordinates_price[index], index)
+            item_price = get_item_price_buying(grayscale_screenshot, top_coordinates_price[index], bottom_offset_coordinates_price[index], index)
             print(item_name, system_name, item_price)
 
 
@@ -60,12 +60,12 @@ def get_item_name(screenshot, top, bottom_offset, item_index):
     return text
 
 
-def get_item_price(screenshot, top, bottom_offset, item_index):
+def get_item_price_buying(screenshot, top, bottom_offset, item_index):
     left_coordinates = [1550, 1560, 1570, 1580, 1590, 1600, 1610, 1620, 1630, 1640, 1650, 1660]
     item_price = 0
     for coordinate in left_coordinates:
         try:
-            text = read_price(screenshot, left_coordinate=coordinate, top=top, bottom_offset=bottom_offset, item_index=item_index)
+            text = read_price_buying(screenshot, left_coordinate=coordinate, top=top, bottom_offset=bottom_offset, item_index=item_index)
             item_price = int(text)
         except ValueError:
             continue
@@ -73,7 +73,7 @@ def get_item_price(screenshot, top, bottom_offset, item_index):
     return item_price
 
 
-def read_price(screenshot, left_coordinate, top, bottom_offset, item_index):
+def read_price_buying(screenshot, left_coordinate, top, bottom_offset, item_index):
     img_crop = crop_image(screenshot, left=left_coordinate, top=top, right_offset=0, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'price_temp' + str(item_index))
     text = text[:-2]
