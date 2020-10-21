@@ -1,9 +1,10 @@
 import cv2
 import pytesseract
-import enum
 from PIL import Image
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+
+is_buying = True
 
 
 def main():
@@ -20,9 +21,9 @@ def main():
     top_coordinates_check = [305, 415, 525, 635, 745, 855]
     bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190]
 
-    screnshot_type = get_screenshot_type(grayscale_screenshot)
+    is_buying = get_screenshot_type(grayscale_screenshot)
 
-    if screnshot_type:
+    if is_buying:
         selling(bottom_offset_coordinates_check, bottom_offset_coordinates_item, bottom_offset_coordinates_price, grayscale_screenshot, top_coordinates_check, top_coordinates_item,
                 top_coordinates_price)
     else:
