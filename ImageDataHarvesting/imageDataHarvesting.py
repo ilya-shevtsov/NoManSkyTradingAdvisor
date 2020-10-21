@@ -24,15 +24,36 @@ def main():
     screenshot_type = get_screenshot_type(grayscale_screenshot)
 
     if screenshot_type:
-        item_check_list = checking_counting_item_selling(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check, screenshot_type)
+        item_check_list = checking_counting_item_selling(
+            bottom_offset_coordinates_check,
+            grayscale_screenshot, top_coordinates_check,
+            screenshot_type
+        )
     else:
-        item_check_list = checking_counting_item_buying(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check, screenshot_type)
+        item_check_list = checking_counting_item_buying(
+            bottom_offset_coordinates_check,
+            grayscale_screenshot,
+            top_coordinates_check,
+            screenshot_type
+        )
 
     for index, is_item in enumerate(item_check_list):
         if is_item:
             system_name = get_system_name(grayscale_screenshot, screenshot_type)
-            item_name = get_item_name(grayscale_screenshot, top_coordinates_item[index], bottom_offset_coordinates_item[index], index, screenshot_type)
-            item_price = get_item_price(grayscale_screenshot, top_coordinates_price[index], bottom_offset_coordinates_price[index], index, screenshot_type)
+            item_name = get_item_name(
+                grayscale_screenshot,
+                top_coordinates_item[index],
+                bottom_offset_coordinates_item[index],
+                index,
+                screenshot_type
+            )
+            item_price = get_item_price(
+                grayscale_screenshot,
+                top_coordinates_price[index],
+                bottom_offset_coordinates_price[index],
+                index,
+                screenshot_type
+            )
             print(item_name, system_name, item_price)
 
 
@@ -105,7 +126,8 @@ def get_item_price(screenshot, top, bottom_offset, item_index, screenshot_type):
             text = read_price(
                 screenshot,
                 left_coordinate=coordinate,
-                top=top, bottom_offset=bottom_offset,
+                top=top,
+                bottom_offset=bottom_offset,
                 item_index=item_index,
                 screenshot_type=screenshot_type
             )
