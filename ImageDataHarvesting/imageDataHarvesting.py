@@ -6,8 +6,8 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 
 
 def main():
-    # screenshot_name = "Buying.png"
-    screenshot_name = "Selling.png"
+    screenshot_name = "Buying.png"
+    # screenshot_name = "Selling.png"
     grayscale_screenshot = Image.open(screenshot_name).convert('LA')
 
     top_coordinates_item = [255, 355, 465, 575, 685, 795]
@@ -139,7 +139,7 @@ def get_item_price(screenshot, top, bottom_offset, item_index, screenshot_type):
 def read_price(screenshot, left_coordinate, top, bottom_offset, item_index, screenshot_type):
     img_crop = crop_image(screenshot, left=left_coordinate, top=top, right_offset=0, bottom_offset=bottom_offset)
     if screenshot_type:
-        text = extract_text_selling(img_crop, 'price_temp' + str(item_index), screenshot_type=screenshot_type)
+        text = extract_text_selling(img_crop, 'price_temp' + str(item_index), screenshot_type)
     else:
         text = extract_text(img_crop, 'price_temp' + str(item_index), screenshot_type)
     text = text[:-2]
