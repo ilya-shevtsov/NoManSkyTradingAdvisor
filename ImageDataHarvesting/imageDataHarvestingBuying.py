@@ -9,33 +9,36 @@ def main():
     screenshot_name = "Buying.png"
     grayscale_screenshot = Image.open(screenshot_name).convert('LA')
 
-    top_coordinates_item = [255, 355, 465, 575, 685]
-    bottom_offset_coordinates_item = [795, 685, 575, 465, 355]
+    top_coordinates_item = [255, 355, 465, 575, 685, 795]
+    bottom_offset_coordinates_item = [795, 685, 575, 465, 355, 245]
 
-    top_coordinates_price = [250, 360, 470, 580, 690]
-    bottom_offset_coordinates_price = [780, 670, 560, 450, 340]
+    top_coordinates_price = [250, 360, 470, 580, 690, 800]
+    bottom_offset_coordinates_price = [780, 670, 560, 450, 340, 230]
+
+    top_coordinates_check = [305, 415, 525, 635, 745, 855]
+    bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190]
 
     not_finished = True
-    top_coordinates_check = [305, 415, 525, 635, 745, 0]
-    bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 0]
-
+    item_check_list = []
     item_index = 0
     while not_finished:
-        is_an_item = check_is_item_buying(
+        checking_if_item = check_is_item_buying(
             grayscale_screenshot,
             top_coordinates_check[item_index],
             bottom_offset_coordinates_check[item_index],
             item_index
         )
-        not_finished = is_an_item
         item_index += 1
-    number_of_items = item_index - 1
+        item_check_list.append(checking_if_item)
+        if not checking_if_item:
+            not_finished = False
 
-    for a in range(number_of_items):
-        system_name = get_system_name(grayscale_screenshot)
-        item_name = get_item_name(grayscale_screenshot, top_coordinates_item[a], bottom_offset_coordinates_item[a], a)
-        item_price = get_item_price(grayscale_screenshot, top_coordinates_price[a], bottom_offset_coordinates_price[a], a)
-        print(item_name, system_name, item_price)
+    for index, is_item in enumerate(item_check_list):
+        if is_item:
+            system_name = get_system_name(grayscale_screenshot)
+            item_name = get_item_name(grayscale_screenshot, top_coordinates_item[index], bottom_offset_coordinates_item[index], index)
+            item_price = get_item_price(grayscale_screenshot, top_coordinates_price[index], bottom_offset_coordinates_price[index], index)
+            print(item_name, system_name, item_price)
 
 
 def check_is_item_buying(screenshot, top, bottom_offset, item_index):
