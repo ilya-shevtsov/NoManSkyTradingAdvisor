@@ -21,7 +21,7 @@ def main():
     item_check_list = []
     item_index = 0
     while item_index < 6:
-        checking_if_item = check_is_item(
+        checking_if_item = check_is_item_selling(
             grayscale_screenshot,
             top_coordinates_check[item_index],
             bottom_offset_coordinates_check[item_index],
@@ -38,7 +38,7 @@ def main():
             print(item_name, system_name, item_price)
 
 
-def check_is_item(screenshot, top, bottom_offset, item_index):
+def check_is_item_selling(screenshot, top, bottom_offset, item_index):
     img_crop = crop_image(screenshot, left=1180, top=top, right_offset=500, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'check_is_item' + str(item_index))
     text = text[:-3]
