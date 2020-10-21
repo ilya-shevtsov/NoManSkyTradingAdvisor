@@ -21,53 +21,64 @@ def main():
     top_coordinates_check = [305, 415, 525, 635, 745, 855]
     bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190]
 
-    is_buying = get_screenshot_type(grayscale_screenshot)
+    screenshot_type = get_screenshot_type(grayscale_screenshot)
 
-    if is_buying:
+    if screenshot_type:
         selling(bottom_offset_coordinates_check, bottom_offset_coordinates_item, bottom_offset_coordinates_price, grayscale_screenshot, top_coordinates_check, top_coordinates_item,
-                top_coordinates_price)
+                top_coordinates_price, screenshot_type)
     else:
         buying(bottom_offset_coordinates_check, bottom_offset_coordinates_item, bottom_offset_coordinates_price, grayscale_screenshot, top_coordinates_check, top_coordinates_item,
-               top_coordinates_price)
+               top_coordinates_price, screenshot_type)
 
 
-def buying(bottom_offset_coordinates_check, bottom_offset_coordinates_item, bottom_offset_coordinates_price, grayscale_screenshot, top_coordinates_check, top_coordinates_item, top_coordinates_price):
-    item_check_list = checking_counting_item_buying(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check)
+def buying(bottom_offset_coordinates_check, bottom_offset_coordinates_item, bottom_offset_coordinates_price, grayscale_screenshot, top_coordinates_check, top_coordinates_item, top_coordinates_price,
+           screenshot_type):
+    item_check_list = checking_counting_item_buying(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check, screenshot_type)
     for index, is_item in enumerate(item_check_list):
         if is_item:
-            system_name = get_system_name(grayscale_screenshot)
-            item_name = get_item_name(grayscale_screenshot, top_coordinates_item[index], bottom_offset_coordinates_item[index], index)
-            item_price = get_item_price_buying(grayscale_screenshot, top_coordinates_price[index], bottom_offset_coordinates_price[index], index)
+            system_name = get_system_name(grayscale_screenshot, screenshot_type)
+            item_name = get_item_name(grayscale_screenshot, top_coordinates_item[index], bottom_offset_coordinates_item[index], index, screenshot_type)
+            item_price = get_item_price(grayscale_screenshot, top_coordinates_price[index], bottom_offset_coordinates_price[index], index, screenshot_type)
             print(item_name, system_name, item_price)
 
 
-def selling(bottom_offset_coordinates_check, bottom_offset_coordinates_item, bottom_offset_coordinates_price, grayscale_screenshot, top_coordinates_check, top_coordinates_item, top_coordinates_price):
-    item_check_list = checking_counting_item_selling(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check)
+def selling(bottom_offset_coordinates_check, bottom_offset_coordinates_item, bottom_offset_coordinates_price, grayscale_screenshot, top_coordinates_check, top_coordinates_item, top_coordinates_price,
+            screenshot_type):
+    item_check_list = checking_counting_item_selling(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check, screenshot_type)
     for index, is_item in enumerate(item_check_list):
         if is_item:
-            system_name = get_system_name(grayscale_screenshot)
-            item_name = get_item_name(grayscale_screenshot, top_coordinates_item[index], bottom_offset_coordinates_item[index], index)
-            item_price = get_item_price_selling(grayscale_screenshot, top_coordinates_price[index], bottom_offset_coordinates_price[index], index)
+            system_name = get_system_name(grayscale_screenshot, screenshot_type)
+            item_name = get_item_name(grayscale_screenshot, top_coordinates_item[index], bottom_offset_coordinates_item[index], index, screenshot_type)
+            item_price = get_item_price(grayscale_screenshot, top_coordinates_price[index], bottom_offset_coordinates_price[index], index, screenshot_type)
             print(item_name, system_name, item_price)
 
 
 def get_screenshot_type(screenshot):
-    img_crop = crop_image(screenshot, left=1300, top=190, right_offset=320, bottom_offset=850)
-    text = extract_text(img_crop, 'screenshot_type')
+    width = screenshot.width
+    height = screenshot.height
+    left = 1300
+    top = 190
+    right = width - 320
+    bottom = height - 850
+    img_crop = screenshot.crop((left, top, right, bottom))
+    img_crop.save('temp_files/screenshot_type.png')
+    img = cv2.imread('temp_files/screenshot_type.png')
+    text = pytesseract.image_to_string(img)
     text = text[:-3]
     return 'Sellable Item' in text
 
 
-def checking_counting_item_buying(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check):
+def checking_counting_item_buying(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check, screenshot_type):
     not_finished = True
     item_check_list = []
     item_index = 0
     while not_finished:
-        checking_if_item = check_is_item_buying(
+        checking_if_item = check_is_item(
             grayscale_screenshot,
             top_coordinates_check[item_index],
             bottom_offset_coordinates_check[item_index],
-            item_index
+            item_index,
+            screenshot_type
         )
         item_index += 1
         item_check_list.append(checking_if_item)
@@ -76,48 +87,71 @@ def checking_counting_item_buying(bottom_offset_coordinates_check, grayscale_scr
     return item_check_list
 
 
-def checking_counting_item_selling(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check):
+def checking_counting_item_selling(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check, screenshot_type):
     item_check_list = []
     item_index = 0
     while item_index < 6:
-        checking_if_item = check_is_item_selling(
+        checking_if_item = check_is_item(
             grayscale_screenshot,
             top_coordinates_check[item_index],
             bottom_offset_coordinates_check[item_index],
-            item_index
+            item_index,
+            screenshot_type
         )
         item_index += 1
         item_check_list.append(checking_if_item)
     return item_check_list
 
 
-def check_is_item_buying(screenshot, top, bottom_offset, item_index):
+def check_is_item(screenshot, top, bottom_offset, item_index, screenshot_type):
     img_crop = crop_image(screenshot, left=1180, top=top, right_offset=550, bottom_offset=bottom_offset)
-    text = extract_text(img_crop, 'check_is_item' + str(item_index))
+    text = extract_text(img_crop, 'check_is_item' + str(item_index), screenshot_type)
     text = text[:-3]
-    return text == 'Produced Locall' in text
+    if screenshot_type:
+        return 'Economy' in text
+    else:
+        return text == 'Produced Locall' in text
 
 
-def check_is_item_selling(screenshot, top, bottom_offset, item_index):
-    img_crop = crop_image(screenshot, left=1180, top=top, right_offset=500, bottom_offset=bottom_offset)
-    text = extract_text(img_crop, 'check_is_item' + str(item_index))
-    text = text[:-3]
-    return 'Economy' in text
+# def check_is_item_selling(screenshot, top, bottom_offset, item_index):
+#     img_crop = crop_image(screenshot, left=1180, top=top, right_offset=500, bottom_offset=bottom_offset)
+#     text = extract_text(img_crop, 'check_is_item' + str(item_index))
+#     text = text[:-3]
+#     return 'Economy' in text
 
 
-def get_item_name(screenshot, top, bottom_offset, item_index):
+def get_item_name(screenshot, top, bottom_offset, item_index, screenshot_type):
     img_crop = crop_image(screenshot, left=1165, top=top, right_offset=330, bottom_offset=bottom_offset)
-    text = extract_text(img_crop, 'item_name_temp' + str(item_index))
+    text = extract_text(img_crop, 'item_name_temp' + str(item_index), screenshot_type)
     text = text[:-2]
     return text
 
 
-def get_item_price_selling(screenshot, top, bottom_offset, item_index):
+# def get_item_price_selling(screenshot, top, bottom_offset, item_index):
+#     left_coordinates = [1550, 1560, 1570, 1580, 1590, 1600, 1610, 1620, 1630, 1640, 1650, 1660]
+#     item_price = 0
+#     for coordinate in left_coordinates:
+#         try:
+#             text = read_price_selling(screenshot, left_coordinate=coordinate, top=top, bottom_offset=bottom_offset, item_index=item_index)
+#             item_price = int(text)
+#         except ValueError:
+#             continue
+#         break
+#     return item_price
+
+
+def get_item_price(screenshot, top, bottom_offset, item_index, screenshot_type):
     left_coordinates = [1550, 1560, 1570, 1580, 1590, 1600, 1610, 1620, 1630, 1640, 1650, 1660]
     item_price = 0
     for coordinate in left_coordinates:
         try:
-            text = read_price_selling(screenshot, left_coordinate=coordinate, top=top, bottom_offset=bottom_offset, item_index=item_index)
+            text = read_price(
+                screenshot,
+                left_coordinate=coordinate,
+                top=top, bottom_offset=bottom_offset,
+                item_index=item_index,
+                screenshot_type=screenshot_type
+            )
             item_price = int(text)
         except ValueError:
             continue
@@ -125,22 +159,23 @@ def get_item_price_selling(screenshot, top, bottom_offset, item_index):
     return item_price
 
 
-def get_item_price_buying(screenshot, top, bottom_offset, item_index):
-    left_coordinates = [1550, 1560, 1570, 1580, 1590, 1600, 1610, 1620, 1630, 1640, 1650, 1660]
-    item_price = 0
-    for coordinate in left_coordinates:
-        try:
-            text = read_price_buying(screenshot, left_coordinate=coordinate, top=top, bottom_offset=bottom_offset, item_index=item_index)
-            item_price = int(text)
-        except ValueError:
-            continue
-        break
-    return item_price
+# def read_price_buying(screenshot, left_coordinate, top, bottom_offset, item_index):
+#     img_crop = crop_image(screenshot, left=left_coordinate, top=top, right_offset=0, bottom_offset=bottom_offset)
+#     text = extract_text(img_crop, 'price_temp' + str(item_index))
+#     text = text[:-2]
+#     text = text.split()
+#     text = [x.replace(',', '') for x in text if x.replace(',', '').isnumeric()]
+#     ' '.join(text)
+#     text = f"{' '.join(text)}"
+#     return text
 
 
-def read_price_buying(screenshot, left_coordinate, top, bottom_offset, item_index):
+def read_price(screenshot, left_coordinate, top, bottom_offset, item_index, screenshot_type):
     img_crop = crop_image(screenshot, left=left_coordinate, top=top, right_offset=0, bottom_offset=bottom_offset)
-    text = extract_text(img_crop, 'price_temp' + str(item_index))
+    if screenshot_type:
+        text = extract_text_selling(img_crop, 'price_temp' + str(item_index), screenshot_type=screenshot_type)
+    else:
+        text = extract_text(img_crop, 'price_temp' + str(item_index), screenshot_type)
     text = text[:-2]
     text = text.split()
     text = [x.replace(',', '') for x in text if x.replace(',', '').isnumeric()]
@@ -149,20 +184,9 @@ def read_price_buying(screenshot, left_coordinate, top, bottom_offset, item_inde
     return text
 
 
-def read_price_selling(screenshot, left_coordinate, top, bottom_offset, item_index):
-    img_crop = crop_image(screenshot, left=left_coordinate, top=top, right_offset=0, bottom_offset=bottom_offset)
-    text = extract_text_selling(img_crop, 'price_temp' + str(item_index))
-    text = text[:-2]
-    text = text.split()
-    text = [x.replace(',', '') for x in text if x.replace(',', '').isnumeric()]
-    ' '.join(text)
-    text = f"{' '.join(text)}"
-    return text
-
-
-def get_system_name(screenshot):
+def get_system_name(screenshot, screenshot_type):
     img_crop = crop_image(screenshot, left=150, top=930, right_offset=1100, bottom_offset=80)
-    text = extract_text(img_crop, 'system_temp')
+    text = extract_text(img_crop, 'system_temp', screenshot_type)
     text = text.split()
     text = [x for x in text if x not in ['-', 'System']]
     ' '.join(text)
@@ -179,16 +203,16 @@ def crop_image(screenshot, left, top, right_offset, bottom_offset):
     return img_crop
 
 
-def extract_text_selling(img_crop, file_name):
+def extract_text_selling(img_crop, file_name, screenshot_type):
     img_crop.save('temp_files/' + file_name + '.png')
     img_saved = cv2.imread('temp_files/' + file_name + '.png')
-    img_enhanced = cv2.threshold(img_saved, 50, 255, cv2.THRESH_BINARY_INV)[1]
-    cv2.imwrite('temp_files/' + file_name + '.png', img_enhanced)
-    text = pytesseract.image_to_string(img_enhanced)
+    img = cv2.threshold(img_saved, 50, 255, cv2.THRESH_BINARY_INV)[1]
+    cv2.imwrite('temp_files/' + file_name + '.png', img)
+    text = pytesseract.image_to_string(img)
     return text
 
 
-def extract_text(img_crop, file_name):
+def extract_text(img_crop, file_name, screenshot_type):
     img_crop.save('temp_files/' + file_name + '.png')
     img = cv2.imread('temp_files/' + file_name + '.png')
     text = pytesseract.image_to_string(img)
