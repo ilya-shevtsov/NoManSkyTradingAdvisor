@@ -15,29 +15,27 @@ def main():
     top_coordinates_price = [250, 360, 470, 580, 690, 800]
     bottom_offset_coordinates_price = [780, 670, 560, 450, 340, 230]
 
-    not_finished = True
     top_coordinates_check = [305, 415, 525, 635, 745, 855]
     bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190]
 
+    is_an_item_list = []
     item_index = 0
-    while not_finished:
+    while item_index < 6:
         is_an_item = check_is_item(
             grayscale_screenshot,
             top_coordinates_check[item_index],
             bottom_offset_coordinates_check[item_index],
             item_index
         )
-        not_finished = not is_an_item
-        if not_finished:
-            item_index += 1
-    star_index = item_index
-    end_index = len(top_coordinates_check)
+        item_index += 1
+        is_an_item_list.append(is_an_item)
 
-    for a in range(star_index, end_index):
-        system_name = get_system_name(grayscale_screenshot)
-        item_name = get_item_name(grayscale_screenshot, top_coordinates_item[a], bottom_offset_coordinates_item[a], a)
-        item_price = get_item_price(grayscale_screenshot, top_coordinates_price[a], bottom_offset_coordinates_price[a], a)
-        print(item_name, system_name, item_price)
+    for index, is_item in enumerate(is_an_item_list):
+        if is_item:
+            system_name = get_system_name(grayscale_screenshot)
+            item_name = get_item_name(grayscale_screenshot, top_coordinates_item[index], bottom_offset_coordinates_item[index], index)
+            item_price = get_item_price(grayscale_screenshot, top_coordinates_price[index], bottom_offset_coordinates_price[index], index)
+            print(item_name, system_name, item_price)
 
 
 def check_is_item(screenshot, top, bottom_offset, item_index):
