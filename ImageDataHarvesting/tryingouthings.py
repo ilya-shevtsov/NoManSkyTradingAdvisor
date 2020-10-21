@@ -1,6 +1,5 @@
 import cv2
 import pytesseract
-import enum
 from PIL import Image
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
@@ -20,32 +19,18 @@ def main():
     top_coordinates_check = [305, 415, 525, 635, 745, 855]
     bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190]
 
-    screnshot_type = get_screenshot_type(grayscale_screenshot)
+    # item_check_list = checking_counting_item_buying(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check)
+    # item_check_list = checking_counting_item_selling(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check)
 
-    if screnshot_type:
-        item_check_list = checking_counting_item_selling(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check)
-        for index, is_item in enumerate(item_check_list):
-            if is_item:
-                system_name = get_system_name(grayscale_screenshot)
-                item_name = get_item_name(grayscale_screenshot, top_coordinates_item[index], bottom_offset_coordinates_item[index], index)
-                item_price = get_item_price_selling(grayscale_screenshot, top_coordinates_price[index], bottom_offset_coordinates_price[index], index)
-                print(item_name, system_name, item_price)
-    else:
-        item_check_list = checking_counting_item_buying(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check)
-        for index, is_item in enumerate(item_check_list):
-            if is_item:
-                system_name = get_system_name(grayscale_screenshot)
-                item_name = get_item_name(grayscale_screenshot, top_coordinates_item[index], bottom_offset_coordinates_item[index], index)
-                item_price = get_item_price_buying(grayscale_screenshot, top_coordinates_price[index], bottom_offset_coordinates_price[index], index)
-                print(item_name, system_name, item_price)
+    screenshot_type = get_item_name(grayscale_screenshot, 0, 0)
+    print(screenshot_type)
 
-
-def get_screenshot_type(screenshot):
-    img_crop = crop_image(screenshot, left=1300, top=190, right_offset=320, bottom_offset=850)
-    text = extract_text(img_crop, 'screenshot_type')
-    text = text[:-3]
-    # print(text)
-    return 'Sellable Item' in text
+    # for index, is_item in enumerate(item_check_list):
+    #     if is_item:
+    #         system_name = get_system_name(grayscale_screenshot)
+    #         item_name = get_item_name(grayscale_screenshot, top_coordinates_item[index], bottom_offset_coordinates_item[index], index)
+    #         item_price = get_item_price_selling(grayscale_screenshot, top_coordinates_price[index], bottom_offset_coordinates_price[index], index)
+    #         print(item_name, system_name, item_price)
 
 
 def checking_counting_item_buying(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check):
@@ -95,9 +80,9 @@ def check_is_item_selling(screenshot, top, bottom_offset, item_index):
     return 'Economy' in text
 
 
-def get_item_name(screenshot, top, bottom_offset, item_index):
-    img_crop = crop_image(screenshot, left=1165, top=top, right_offset=330, bottom_offset=bottom_offset)
-    text = extract_text(img_crop, 'item_name_temp' + str(item_index))
+def get_item_name(screenshot, top, bottom_offset):
+    img_crop = crop_image(screenshot, left=1300, top=190, right_offset=320, bottom_offset=850)
+    text = extract_text(img_crop, 'item_name_temp')
     text = text[:-2]
     return text
 
