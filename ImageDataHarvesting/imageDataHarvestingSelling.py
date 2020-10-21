@@ -18,6 +18,17 @@ def main():
     top_coordinates_check = [305, 415, 525, 635, 745, 855]
     bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190]
 
+    item_check_list = checking_counting_item_selling(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check)
+
+    for index, is_item in enumerate(item_check_list):
+        if is_item:
+            system_name = get_system_name(grayscale_screenshot)
+            item_name = get_item_name(grayscale_screenshot, top_coordinates_item[index], bottom_offset_coordinates_item[index], index)
+            item_price = get_item_price(grayscale_screenshot, top_coordinates_price[index], bottom_offset_coordinates_price[index], index)
+            print(item_name, system_name, item_price)
+
+
+def checking_counting_item_selling(bottom_offset_coordinates_check, grayscale_screenshot, top_coordinates_check):
     item_check_list = []
     item_index = 0
     while item_index < 6:
@@ -29,13 +40,7 @@ def main():
         )
         item_index += 1
         item_check_list.append(checking_if_item)
-
-    for index, is_item in enumerate(item_check_list):
-        if is_item:
-            system_name = get_system_name(grayscale_screenshot)
-            item_name = get_item_name(grayscale_screenshot, top_coordinates_item[index], bottom_offset_coordinates_item[index], index)
-            item_price = get_item_price(grayscale_screenshot, top_coordinates_price[index], bottom_offset_coordinates_price[index], index)
-            print(item_name, system_name, item_price)
+    return item_check_list
 
 
 def check_is_item_selling(screenshot, top, bottom_offset, item_index):
