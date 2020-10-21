@@ -18,19 +18,19 @@ def main():
     top_coordinates_check = [305, 415, 525, 635, 745, 855]
     bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190]
 
-    is_an_item_list = []
+    item_check_list = []
     item_index = 0
     while item_index < 6:
-        is_an_item = check_is_item(
+        checking_if_item = check_is_item(
             grayscale_screenshot,
             top_coordinates_check[item_index],
             bottom_offset_coordinates_check[item_index],
             item_index
         )
         item_index += 1
-        is_an_item_list.append(is_an_item)
+        item_check_list.append(checking_if_item)
 
-    for index, is_item in enumerate(is_an_item_list):
+    for index, is_item in enumerate(item_check_list):
         if is_item:
             system_name = get_system_name(grayscale_screenshot)
             item_name = get_item_name(grayscale_screenshot, top_coordinates_item[index], bottom_offset_coordinates_item[index], index)
