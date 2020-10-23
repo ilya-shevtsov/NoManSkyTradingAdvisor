@@ -183,7 +183,7 @@ def crop_image(screenshot, left, top, right_offset, bottom_offset):
 def extract_text_selling(img_crop, file_name, screenshot_type):
     img_crop.save('temp_files/' + file_name + '.png')
     img_saved = cv2.imread('temp_files/' + file_name + '.png')
-    img = cv2.threshold(img_saved, 50, 255, cv2.THRESH_BINARY_INV)[1]
+    img = cv2.threshold(img_saved, 45, 255, cv2.THRESH_BINARY_INV)[1]
     cv2.imwrite('temp_files/' + file_name + '.png', img)
     text = pytesseract.image_to_string(img)
     return text

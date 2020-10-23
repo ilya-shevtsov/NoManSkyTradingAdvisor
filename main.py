@@ -9,8 +9,6 @@ def main():
     data_frame = read_data(file_name)
     analyzed_data = analyze_data(data_frame)
     visualize(analyzed_data)
-    data_frame.dropna(how='any')
-    print(data_frame)
 
 
 def read_data(file_name):
