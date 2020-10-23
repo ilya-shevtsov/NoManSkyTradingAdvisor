@@ -3,15 +3,12 @@ import pandas as pd
 import cv2
 import pytesseract
 from PIL import Image
+import os
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 
 def main():
-    # screenshot_name = "Buying.png"
-    screenshot_name = "Selling.png"
-    grayscale_screenshot = Image.open(screenshot_name).convert('LA')
-
     top_coordinates_item = [255, 355, 465, 575, 685, 795]
     bottom_offset_coordinates_item = [795, 685, 575, 465, 355, 245]
 
@@ -21,51 +18,60 @@ def main():
     top_coordinates_check = [305, 415, 525, 635, 745, 855]
     bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190]
 
-    screenshot_type = get_screenshot_type(grayscale_screenshot)
+    for filename in os.listdir('un_converted_images'):
+        if filename.endswith('jpg'):
+            img = Image.open(os.path.join('un_converted_images', filename))
+            new_img = img.convert('RGB')
+            new_img.save(os.path.join('converted_images', filename.replace('jpg', 'png')))
+            os.remove(os.path.join('un_converted_images', filename))
 
-    if screenshot_type:
-        item_check_list = checking_counting_item_selling(
-            bottom_offset_coordinates_check,
-            grayscale_screenshot, top_coordinates_check,
-            screenshot_type
-        )
-    else:
-        item_check_list = checking_counting_item_buying(
-            bottom_offset_coordinates_check,
-            grayscale_screenshot,
-            top_coordinates_check,
-            screenshot_type
-        )
-
-    for index, is_item in enumerate(item_check_list):
-        if is_item:
-            system_name = get_system_name(grayscale_screenshot, screenshot_type)
-            item_name = get_item_name(
-                grayscale_screenshot,
-                top_coordinates_item[index],
-                bottom_offset_coordinates_item[index],
-                index,
+    for filename in os.listdir('converted_images'):
+        screenshot_name = filename
+        screenshot = Image.open(os.path.join('converted_images', screenshot_name))
+        grayscale_screenshot = screenshot.convert('LA')
+        screenshot_type = get_screenshot_type(grayscale_screenshot)
+        if screenshot_type:
+            item_check_list = checking_counting_item_selling(
+                bottom_offset_coordinates_check,
+                grayscale_screenshot, top_coordinates_check,
                 screenshot_type
             )
-            item_price = get_item_price(
+        else:
+            item_check_list = checking_counting_item_buying(
+                bottom_offset_coordinates_check,
                 grayscale_screenshot,
-                top_coordinates_price[index],
-                bottom_offset_coordinates_price[index],
-                index,
+                top_coordinates_check,
                 screenshot_type
             )
-            if screenshot_type:
-                end_result = [item_name, system_name, 0, str(item_price)]
-            else:
-                end_result = [item_name, system_name, str(item_price), 0]
-            with open('data_try_out.csv', 'a') as file:
-                writer = csv.writer(file)
-                writer.writerow(end_result)
 
+        for index, is_item in enumerate(item_check_list):
+            if is_item:
+                system_name = get_system_name(grayscale_screenshot, screenshot_type)
+                item_name = get_item_name(
+                    grayscale_screenshot,
+                    top_coordinates_item[index],
+                    bottom_offset_coordinates_item[index],
+                    index,
+                    screenshot_type
+                )
+                item_price = get_item_price(
+                    grayscale_screenshot,
+                    top_coordinates_price[index],
+                    bottom_offset_coordinates_price[index],
+                    index,
+                    screenshot_type
+                )
+                if screenshot_type:
+                    end_result = [item_name, system_name, 0, str(item_price)]
+                else:
+                    end_result = [item_name, system_name, str(item_price), 0]
+                with open('data_try_out.csv', 'a') as file:
+                    writer = csv.writer(file, delimiter=';')
+                    writer.writerow(end_result)
 
-def read_data(file_name):
-    data_frame = pd.read_csv(file_name, delimiter=";")
-    return data_frame
+        data = pd.read_csv('data_try_out.csv')
+        data.dropna(how='all')
+        data.to_csv('data_try_out.csv', index=False)
 
 
 def get_screenshot_type(screenshot):
