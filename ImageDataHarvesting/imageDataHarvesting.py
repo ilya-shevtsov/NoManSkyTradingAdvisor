@@ -69,10 +69,10 @@ def main():
                     writer = csv.writer(file, delimiter=';')
                     writer.writerow(end_result)
 
-        data = pd.read_csv('data_try_out.csv', encoding='cp1252')
-        data.dropna(how='all')
-        data.drop_duplicates(inplace=True)
-        data.to_csv('data_try_out.csv', index=False)
+    data = pd.read_csv('data_try_out.csv', encoding='cp1252')
+    data.dropna(how='all')
+    data.drop_duplicates(inplace=True)
+    data.to_csv('data_try_out.csv', index=False)
 
 
 def get_screenshot_type(screenshot):

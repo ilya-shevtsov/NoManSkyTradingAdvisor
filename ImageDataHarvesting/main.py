@@ -6,14 +6,9 @@ import math
 
 def main():
     file_name = "data_try_out.csv"
-    data_frame = read_data(file_name)
+    data_frame = pd.read_csv(file_name, delimiter=";")
     analyzed_data = analyze_data(data_frame)
     visualize(analyzed_data)
-
-
-def read_data(file_name):
-    data_frame = pd.read_csv(file_name, delimiter=";")
-    return data_frame
 
 
 def analyze_data(data_frame):
@@ -44,17 +39,13 @@ def analyze_data(data_frame):
 
 
 def visualize(data_frame):
-    analyzed_data = data_frame.sort_values(['Buying', 'Selling'])
-    visualize_in_browser(analyzed_data)
-
-
-def visualize_in_browser(data):
-    data.head()
-    fig = go.Figure(data=[go.Table(header=dict(values=list(data.columns)),
-                                   cells=dict(values=[data.ItemID, data.Buying,
-                                                      data.Selling]))])
-    fig.show()
-    return fig
+    analyzed_data_sorted = data_frame.sort_values(['Buying', 'Selling'])
+    analyzed_data_sorted.head()
+    graph_constructor = go.Figure(data=[go.Table(header=dict(values=list(analyzed_data_sorted.columns)),
+                                                 cells=dict(values=[analyzed_data_sorted.ItemID,
+                                                                    analyzed_data_sorted.Buying,
+                                                                    analyzed_data_sorted.Selling]))])
+    graph_constructor.show()
 
 
 if __name__ == '__main__':
