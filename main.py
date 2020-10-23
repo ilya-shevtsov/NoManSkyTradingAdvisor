@@ -5,14 +5,14 @@ import math
 
 
 def main():
-    file_name = "data.csv"
+    file_name = "data_try_out.csv"
     data_frame = read_data(file_name)
     analyzed_data = analyze_data(data_frame)
     visualize(analyzed_data)
 
 
 def read_data(file_name):
-    data_frame = pd.read_csv(file_name, delimiter=";")
+    data_frame = pd.read_csv(file_name, delimiter=",")
     return data_frame
 
 

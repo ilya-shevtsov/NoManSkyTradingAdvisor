@@ -8,7 +8,6 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 
 
 def main():
-    file_name = "data_try_out.csv"
     # screenshot_name = "Buying.png"
     screenshot_name = "Selling.png"
     grayscale_screenshot = Image.open(screenshot_name).convert('LA')
@@ -55,6 +54,7 @@ def main():
                 index,
                 screenshot_type
             )
+            print(item_price)
             if screenshot_type:
                 end_result = [item_name, system_name, 0, str(item_price)]
             else:
