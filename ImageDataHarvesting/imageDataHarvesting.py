@@ -69,10 +69,10 @@ def main():
                     writer = csv.writer(file, delimiter=';')
                     writer.writerow(end_result)
 
-    data = pd.read_csv('data_try_out.csv', encoding='cp1252')
-    data.dropna(how='all')
-    data.drop_duplicates(inplace=True)
-    data.to_csv('data_try_out.csv', index=False)
+        data = pd.read_csv('data_try_out.csv', encoding='cp1252')
+        data.dropna(how='all')
+        data.drop_duplicates(inplace=True)
+        data.to_csv('data_try_out.csv', index=False)
 
 
 def get_screenshot_type(screenshot):
@@ -120,7 +120,7 @@ def checking_counting_item_selling(bottom_offset_coordinates_check, grayscale_sc
 
 
 def check_is_item(screenshot, top, bottom_offset, item_index, screenshot_type):
-    img_crop = crop_image(screenshot, left=1180, top=top, right_offset=550, bottom_offset=bottom_offset)
+    img_crop = crop_image('check_is_item' + str(item_index), screenshot, left=1180, top=top, right_offset=550, bottom_offset=bottom_offset)
     if screenshot_type:
         text = extract_text_checking_item(img_crop, 'check_is_item' + str(item_index), screenshot_type)
     else:
@@ -133,7 +133,7 @@ def check_is_item(screenshot, top, bottom_offset, item_index, screenshot_type):
 
 
 def get_item_name(screenshot, top, bottom_offset, item_index, screenshot_type):
-    img_crop = crop_image(screenshot, left=1165, top=top, right_offset=340, bottom_offset=bottom_offset)
+    img_crop = crop_image('item_name_temp' + str(item_index), screenshot, left=1165, top=top, right_offset=340, bottom_offset=bottom_offset)
     text = extract_text(img_crop, 'item_name_temp' + str(item_index), screenshot_type)
     text = text[:-2]
     return text
@@ -160,7 +160,7 @@ def get_item_price(screenshot, top, bottom_offset, item_index, screenshot_type):
 
 
 def read_price(screenshot, left_coordinate, top, bottom_offset, item_index, screenshot_type):
-    img_crop = crop_image(screenshot, left=left_coordinate, top=top, right_offset=0, bottom_offset=bottom_offset)
+    img_crop = crop_image('price_temp' + str(item_index), screenshot, left=left_coordinate, top=top, right_offset=0, bottom_offset=bottom_offset)
     if screenshot_type:
         text = extract_text_selling(img_crop, 'price_temp' + str(item_index), screenshot_type)
     else:
@@ -174,8 +174,7 @@ def read_price(screenshot, left_coordinate, top, bottom_offset, item_index, scre
 
 
 def get_system_name(screenshot, screenshot_type):
-    img_crop = crop_image(screenshot, left=150, top=930, right_offset=1100, bottom_offset=80)
-    threshold_img = img_crop.cv2.threshold(img_crop, 140, 255, cv2.THRESH_BINARY_INV)[1]
+    img_crop = crop_image('system_temp', screenshot, left=150, top=930, right_offset=1100, bottom_offset=80)
     text = extract_text_system_name(img_crop, 'system_temp', screenshot_type)
     text = text.split()
     text = [x for x in text if x not in ['-', 'System']]
@@ -184,60 +183,44 @@ def get_system_name(screenshot, screenshot_type):
     return text
 
 
-def crop_image(screenshot, left, top, right_offset, bottom_offset):
+def crop_image(file_name, screenshot, left, top, right_offset, bottom_offset):
     width = screenshot.width
     height = screenshot.height
     right = width - right_offset
     bottom = height - bottom_offset
     img_crop = screenshot.crop((left, top, right, bottom))
+    img_crop.save('temp_files/' + file_name + '.png')
     return img_crop
 
 
 def extract_text_selling(img_crop, file_name, screenshot_type):
-    img_crop.save('temp_files/' + file_name + '.png')
     img = cv2.imread('temp_files/' + file_name + '.png')
     img = cv2.threshold(img, 45, 255, cv2.THRESH_BINARY_INV)[1]
+    cv2.imwrite('temp_files/' + file_name + '.png', img)
     text = pytesseract.image_to_string(img)
     return text
 
 
 def extract_text_system_name(img_crop, file_name, screenshot_type):
-    img_crop.save('temp_files/' + file_name + '.png')
     img = cv2.imread('temp_files/' + file_name + '.png')
     img = cv2.threshold(img, 140, 255, cv2.THRESH_BINARY_INV)[1]
+    cv2.imwrite('temp_files/' + file_name + '.png', img)
     text = pytesseract.image_to_string(img)
     return text
 
 
 def extract_text_checking_item(img_crop, file_name, screenshot_type):
-    img_crop.save('temp_files/' + file_name + '.png')
     img = cv2.imread('temp_files/' + file_name + '.png')
     img = cv2.threshold(img, 120, 255, cv2.THRESH_BINARY_INV)[1]
+    cv2.imwrite('temp_files/' + file_name + '.png', img)
     text = pytesseract.image_to_string(img)
     return text
 
 
 def extract_text(img_crop, file_name, screenshot_type):
-    img_crop.save('temp_files/' + file_name + '.png')
     img = cv2.imread('temp_files/' + file_name + '.png')
     text = pytesseract.image_to_string(img)
     return text
-
-# def thresholding_image(img,)
-# def universal_method(img_crop, file_name, screenshot_type):
-#     img_crop.save('temp_files/' + file_name + '.png')
-#     img = cv2.imread('temp_files/' + file_name + '.png')
-#     text = pytesseract.image_to_string(img)
-#     return text
-
-#     # system name
-#     # img = cv2.threshold(img_saved, 140, 255, cv2.THRESH_BINARY_INV)[1]
-
-#     # checking item when selling
-#     # img = cv2.threshold(img_saved, 120, 255, cv2.THRESH_BINARY_INV)[1]
-
-#     # read price when selling
-#     # img = cv2.threshold(img_saved, 45, 255, cv2.THRESH_BINARY_INV)[1]
 
 
 if __name__ == '__main__':
