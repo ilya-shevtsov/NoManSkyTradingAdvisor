@@ -9,22 +9,22 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 
 
 def main():
+    image_data_harvesting()
+
+
+def image_data_harvesting():
     top_coordinates_item = [255, 355, 465, 575, 685, 795]
     bottom_offset_coordinates_item = [795, 685, 575, 465, 355, 245]
-
     top_coordinates_price = [250, 360, 470, 580, 690, 800]
     bottom_offset_coordinates_price = [780, 670, 560, 450, 340, 230]
-
     top_coordinates_check = [305, 415, 525, 635, 745, 855]
     bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190]
-
     for filename in os.listdir('un_converted_images'):
         if filename.endswith('jpg'):
             img = Image.open(os.path.join('un_converted_images', filename))
             new_img = img.convert('RGB')
             new_img.save(os.path.join('converted_images', filename.replace('jpg', 'png')))
             os.remove(os.path.join('un_converted_images', filename))
-
     for filename in os.listdir('converted_images'):
         screenshot_name = filename
         screenshot = Image.open(os.path.join('converted_images', screenshot_name))
@@ -65,14 +65,13 @@ def main():
                     end_result = [item_name, system_name, 0, str(item_price)]
                 else:
                     end_result = [item_name, system_name, str(item_price), 0]
-                with open('data_try_out.csv', 'a') as file:
+                with open('harvested_data.csv', 'a') as file:
                     writer = csv.writer(file, delimiter=';')
                     writer.writerow(end_result)
-
-    data = pd.read_csv('data_try_out.csv', encoding='cp1252')
+    data = pd.read_csv('harvested_data.csv', encoding='cp1252')
     data.dropna(how='all')
     data.drop_duplicates(inplace=True)
-    data.to_csv('data_try_out.csv', index=False)
+    data.to_csv('harvested_data.csv', index=False)
 
 
 def get_screenshot_type(screenshot):
