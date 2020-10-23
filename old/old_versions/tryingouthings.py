@@ -18,16 +18,16 @@ def main():
     top_coordinates_check = [305, 415, 525, 635, 745, 855]
     bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190]
 
-    for filename in os.listdir('un_converted_images'):
+    for filename in os.listdir('../../ImageDataHarvesting/un_converted_images'):
         if filename.endswith('jpg'):
-            img = Image.open(os.path.join('un_converted_images', filename))
+            img = Image.open(os.path.join('../../ImageDataHarvesting/un_converted_images', filename))
             new_img = img.convert('RGB')
-            new_img.save(os.path.join('converted_images', filename.replace('jpg', 'png')))
-            os.remove(os.path.join('un_converted_images', filename))
+            new_img.save(os.path.join('../../ImageDataHarvesting/converted_images', filename.replace('jpg', 'png')))
+            os.remove(os.path.join('../../ImageDataHarvesting/un_converted_images', filename))
 
-    for filename in os.listdir('converted_images'):
+    for filename in os.listdir('../../ImageDataHarvesting/converted_images'):
         screenshot_name = filename
-        screenshot = Image.open(os.path.join('converted_images', screenshot_name))
+        screenshot = Image.open(os.path.join('../../ImageDataHarvesting/converted_images', screenshot_name))
         grayscale_screenshot = screenshot.convert('LA')
         screenshot_type = get_screenshot_type(grayscale_screenshot)
         if screenshot_type:
@@ -78,7 +78,7 @@ def main():
 def get_screenshot_type(screenshot):
     img_crop = screenshot.crop((1300, 190, screenshot.width - 320, screenshot.height - 850))
     img_crop.save('temp_files/screenshot_type.png')
-    img = cv2.imread('temp_files/screenshot_type.png')
+    img = cv2.imread('../../ImageDataHarvesting/temp_files/screenshot_type.png')
     text = pytesseract.image_to_string(img)
     text = text[:-3]
     return 'Sellable Item' in text
