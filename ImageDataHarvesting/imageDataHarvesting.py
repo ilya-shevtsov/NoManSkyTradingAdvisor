@@ -176,7 +176,6 @@ def get_system_name(screenshot, screenshot_type):
     text = [x for x in text if x not in ['-', 'System']]
     ' '.join(text)
     text = f"{' '.join(text)}"
-    print(text)
     return text
 
 
