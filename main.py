@@ -5,7 +5,7 @@ import math
 
 
 def main():
-    file_name = "data.csv"
+    file_name = "data_try_out.csv"
     data_frame = read_data(file_name)
     analyzed_data = analyze_data(data_frame)
     visualize(analyzed_data)
