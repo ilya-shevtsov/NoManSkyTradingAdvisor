@@ -194,24 +194,24 @@ def crop_image(file_name, screenshot, left, top, right_offset, bottom_offset):
 
 
 def extract_text_selling(img_crop, file_name, screenshot_type):
-    img_saved = cv2.imread('temp_files/' + file_name + '.png')
-    img = cv2.threshold(img_saved, 45, 255, cv2.THRESH_BINARY_INV)[1]
+    img = cv2.imread('temp_files/' + file_name + '.png')
+    img = cv2.threshold(img, 45, 255, cv2.THRESH_BINARY_INV)[1]
     cv2.imwrite('temp_files/' + file_name + '.png', img)
     text = pytesseract.image_to_string(img)
     return text
 
 
 def extract_text_system_name(img_crop, file_name, screenshot_type):
-    img_saved = cv2.imread('temp_files/' + file_name + '.png')
-    img = cv2.threshold(img_saved, 140, 255, cv2.THRESH_BINARY_INV)[1]
+    img = cv2.imread('temp_files/' + file_name + '.png')
+    img = cv2.threshold(img, 140, 255, cv2.THRESH_BINARY_INV)[1]
     cv2.imwrite('temp_files/' + file_name + '.png', img)
     text = pytesseract.image_to_string(img)
     return text
 
 
 def extract_text_checking_item(img_crop, file_name, screenshot_type):
-    img_saved = cv2.imread('temp_files/' + file_name + '.png')
-    img = cv2.threshold(img_saved, 120, 255, cv2.THRESH_BINARY_INV)[1]
+    img = cv2.imread('temp_files/' + file_name + '.png')
+    img = cv2.threshold(img, 120, 255, cv2.THRESH_BINARY_INV)[1]
     cv2.imwrite('temp_files/' + file_name + '.png', img)
     text = pytesseract.image_to_string(img)
     return text
