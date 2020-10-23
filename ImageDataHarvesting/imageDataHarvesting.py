@@ -1,5 +1,5 @@
 import csv
-
+import pandas as pd
 import cv2
 import pytesseract
 from PIL import Image
@@ -22,7 +22,6 @@ def main():
     bottom_offset_coordinates_check = [740, 630, 520, 410, 300, 190]
 
     screenshot_type = get_screenshot_type(grayscale_screenshot)
-
     if screenshot_type:
         item_check_list = checking_counting_item_selling(
             bottom_offset_coordinates_check,
@@ -54,7 +53,17 @@ def main():
                 index,
                 screenshot_type
             )
-            print(item_name, system_name, item_price)
+            if screenshot_type:
+                end_result = [item_name, system_name, 0, str(item_price)]
+            else:
+                end_result = [item_name, system_name, str(item_price), 0]
+            with open('data_try_out.csv', 'a') as file:
+                writer = csv.writer(file, delimiter=';')
+                writer.writerow(end_result)
+
+    data = pd.read_csv('data_try_out.csv')
+    data.dropna(how='all')
+    data.to_csv('data_try_out.csv', index=False)
 
 
 def get_screenshot_type(screenshot):

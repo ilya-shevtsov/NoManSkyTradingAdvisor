@@ -9,10 +9,12 @@ def main():
     data_frame = read_data(file_name)
     analyzed_data = analyze_data(data_frame)
     visualize(analyzed_data)
+    data_frame.dropna(how='any')
+    print(data_frame)
 
 
 def read_data(file_name):
-    data_frame = pd.read_csv(file_name, delimiter=",")
+    data_frame = pd.read_csv(file_name, delimiter=";")
     return data_frame
 
 
